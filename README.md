@@ -1,2 +1,2 @@
 # Portfolio-Pratic
-Repositório destinado para telas criadas para a Pratic Sistemas
+Repositório destinado para telas criadas na empresa Pratic Sistemas
