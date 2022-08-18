@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
@@ -19,6 +21,7 @@ import br.com.praticsistemas.pratic.templates.UnCadastro;
 import br.com.praticsistemas.unprtcomps.editFormatado;
 import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePratic;
+import br.com.praticsistemas.unprtlib.numeros.Numeros;
 
 public class CadasGEB10 extends UnCadastro {
 
@@ -39,28 +42,25 @@ public class CadasGEB10 extends UnCadastro {
 
   public CadasGEB10() {
 	initialize();
-
+	montaTela("");
   }
 
   private void initialize() {
 	this.setTitle("Cadastro GEB-10");
 	this.setCodigoTela("4304");
 	this.setSize(new Dimension(730, 415));
-	this.setFocoAutomaticoGravaTela(false);
 	this.getContentPane().add(getpanelCentral(), BorderLayout.CENTER);
 	this.setCampoTelaTrabalho(getDataGEB());
 	this.setCampoFocoAberturaTela(getDataGEB());
 	this.setFocoAutomaticoGravaTela(false);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.cadasGEB10 = null;
+		DeskPratic.telasFinan.abrirCadasGEB10 = null;
 	  }
 	});
   }
 
   public boolean montaTela(String codigo) {
-
-	return getTabelaRes().montaTela("");
 
 	// if (getdataGEB().isVazio() || getvalorGEB10().isVazio() || getvalorParGEB10().isVazio()) {
 	// gettabelaRes().limpaTebela();
@@ -74,6 +74,13 @@ public class CadasGEB10 extends UnCadastro {
 	// + getFilCod().getText() + " and vencod = " + getVenCod().getText()
 	// + " order by empcod, filcod, vencod, movdat, movope ");
 
+	return getTabelaRes().montaTela("");
+  }
+
+  private void montarPorcentagem() {
+	double total = getValorGEB10().getValorDecimal() * (getPerParGEB10().getValorDecimal() / 100);
+	getValorParGEB10().setText(Numeros.formatarDecimalVariavel(total, 6));
+	getValorParGEB10().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
   public boolean gravaTela() {
@@ -120,6 +127,7 @@ public class CadasGEB10 extends UnCadastro {
 
 	if (!getAcaoTela(getTabelaRes().getAcaoTela()).equalsIgnoreCase("E")) {
 	  montaTela("");
+	  limpaTela();
 	  getDataGEB().requestFocus();
 	}
 
@@ -282,7 +290,7 @@ public class CadasGEB10 extends UnCadastro {
   private UnJTablePratic getTabelaRes() {
 	if (tabelaRes == null) {
 	  tabelaRes = new UnJTablePratic();
-	  tabelaRes.setCampoTitulosTabela("Data, Valor , % Participação, Valor da Participação");
+	  tabelaRes.setCampoTitulosTabela("Data, Valor, % Participação, Valor da Participação");
 	  tabelaRes.setCampoDadosTabelaView("ES_VIEW_GEB10");
 	  tabelaRes.setCampoDadosTabela("geb_data, valor, perc_part, valor_part");
 	  tabelaRes.setCampoTitulosTabelaTamanhos("110, 150, 400, 400");
@@ -316,7 +324,6 @@ public class CadasGEB10 extends UnCadastro {
   private editFormatado getValorGEB10() {
 	if (valorGEB10 == null) {
 	  valorGEB10 = new editFormatado();
-	  valorGEB10.setQuantidadeCasasDecimais(4);
 	  valorGEB10.setName("valor");
 	  valorGEB10.setToolTipText("");
 	  valorGEB10.setTipoFormatacao(7);
@@ -337,6 +344,12 @@ public class CadasGEB10 extends UnCadastro {
   private editFormatado getPerParGEB10() {
 	if (perParGEB10 == null) {
 	  perParGEB10 = new editFormatado();
+	  perParGEB10.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent arg0) {
+		  montarPorcentagem();
+		}
+	  });
 	  perParGEB10.setQuantidadeCasasDecimais(4);
 	  perParGEB10.setName("perc_part");
 	  perParGEB10.setToolTipText("");
@@ -361,12 +374,25 @@ public class CadasGEB10 extends UnCadastro {
   private editFormatado getValorParGEB10() {
 	if (valorParGEB10 == null) {
 	  valorParGEB10 = new editFormatado();
-	  valorParGEB10.setQuantidadeCasasDecimais(4);
+	  valorParGEB10.setEventosQuantidadesDigitos(4);
+	  valorParGEB10.setQuantidadeCasasDecimais(6);
+	  valorParGEB10.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent arg0) {
+		  getBtnAceitar().requestFocus();;
+		}
+
+		@Override
+		public void focusGained(FocusEvent e) {
+		  montarPorcentagem();
+		}
+	  });
 	  valorParGEB10.setName("valor_part");
 	  valorParGEB10.setToolTipText("");
 	  valorParGEB10.setTipoFormatacao(7);
 	  valorParGEB10.getQuantidadeCasasDecimais();
 	  valorParGEB10.setCampoObrigatorio(false);
+
 	}
 	return valorParGEB10;
   }

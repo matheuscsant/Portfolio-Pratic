@@ -1,30 +1,29 @@
 package br.com.praticsistemas.pratic.faturamento.cadastros;
 
-import br.com.praticsistemas.pratic.DeskPratic;
-import br.com.praticsistemas.pratic.templates.UnCadastro;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.sql.SQLException;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import br.com.praticsistemas.pratic.DeskPratic;
+import br.com.praticsistemas.pratic.templates.UnCadastro;
+import br.com.praticsistemas.pratic.util.objetos.EditPratic;
+import br.com.praticsistemas.unprtcomps.editFormatado;
+import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePratic;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
-import java.awt.Font;
-
-import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
-import java.awt.Insets;
-import java.sql.SQLException;
-import javax.swing.border.BevelBorder;
-import java.awt.Color;
-import br.com.praticsistemas.pratic.util.objetos.EditPratic;
-import br.com.praticsistemas.unprtcomps.editFormatado;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-
-public class ValContpCli extends UnCadastro {
+public class ValorContribuicaoParaCliente extends UnCadastro {
 
   private static final long serialVersionUID = 1L;
   private JPanel panelCentral;
@@ -39,12 +38,13 @@ public class ValContpCli extends UnCadastro {
   private UnJLabel lbValorCont;
   private editFormatado valContCli;
 
-  public ValContpCli() {
+  public ValorContribuicaoParaCliente() {
 
 	initialize();
   }
 
   private void initialize() {
+	setCampoChaveTelaEstrangeiro(true);
 
 	this.setMinimumSize(new Dimension(730, 330));
 	this.setPreferredSize(new Dimension(730, 330));
@@ -54,12 +54,13 @@ public class ValContpCli extends UnCadastro {
 	this.setFocoAutomaticoGravaTela(false);
 	this.setCampoTelaTrabalho(getCliCod());
 	this.setCampoFocoAberturaTela(getCliCod());
-	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRIBUICAO_CLIENTE");
+	// this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRIBUICAO_CLIENTE");
 	getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.valContpCli = null; // Evento para não bloquear a tela
-												  // de abrir
+		DeskPratic.telasFinan.abrirValorContribuicaoParaCliente = null; // Evento para não bloquear
+																		// a tela
+		// de abrir
 	  }
 	});
 	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
@@ -229,15 +230,13 @@ public class ValContpCli extends UnCadastro {
   }
 
   public boolean montaTela(String codigo) {
-	getCliCod().setCampoObrigatorio(false);
-	getData().setCampoObrigatorio(false);
 
 	getTabelaRes().setCampoDadosTabelaWhere(
-		(getCliCod().isVazio()) ? " " : " CLICOD = " + getCliCod().getText() + " ");
+		(getCliCod().isVazio()) ? "" : " CLICOD = " + getCliCod().getText() + " ");
 
-	getTabelaRes().limpaTebela();
+	getTabelaRes().montaTela("");
 
-	return getTabelaRes().montaTela("");
+	return true;
   }
 
   private UnJTablePratic getTabelaRes() {
@@ -277,18 +276,18 @@ public class ValContpCli extends UnCadastro {
   private EditPratic getCliCod() {
 	if (cliCod == null) {
 	  cliCod = new EditPratic();
+	  cliCod.setTipoValidacao("cli_geral");
+	  cliCod.setName("CLICOD");
+	  cliCod.setName2("Cliente");
+	  cliCod.setLabelDescricao(getLbDescCliCod());
 	  cliCod.addFocusListener(new FocusAdapter() {
 		@Override
 		public void focusLost(FocusEvent e) {
-		  montaTela("");
+		  if (cliCod.isVazio()) {
+			montaTela("");
+		  }
 		}
 	  });
-	  cliCod.setName("CLICOD");
-	  cliCod.setName2("Cliente");
-	  cliCod.setMinimumSize(new Dimension(30, 20));
-	  cliCod.setPreferredSize(new Dimension(30, 20));
-	  cliCod.setTipoValidacao("cli_geral");
-	  cliCod.setLabelDescricao(getLbDescCliCod());
 	}
 	return cliCod;
   }
