@@ -34,7 +34,7 @@ import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.numeros.Numeros;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
-public class CadasControleDeViagem extends UnCadastroEmpresa {
+public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 
   private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
   private UnJLabel lbFunCod;
   private editFormatado veiPla;
   private EditPratic funCod;
-  private UnJLabel lbDescFunCod;
+  private UnJLabel lbFunNom;
   private UnEdit funNom;
   private UnJLabel lbPeriodoViagem;
   private editFormatado mveDat;
@@ -67,58 +67,58 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
   private UnJLabel lbValTot;
   private UnJLabel lbMveObs;
   private UnEdit mveObs;
-  private UnJLabel lbFilCod;
-  private UnJLabel lbDescMot;
+  private UnJLabel lbDescFilCod;
+  private UnJLabel lbDescFunCod;
   private UnJLabel lbCalcValorFrete;
-  private UnJLabel descVeiPla;
-  private UnJLabel lbDescCidOrigem;
+  private UnJLabel lbDescVeiPla;
+  private UnJLabel lbDescOriPre;
   private EditPratic oriPre;
-  private UnJLabel lbDescCidDestino;
+  private UnJLabel lbDescDesPre;
   private EditPratic desPre;
-  private JPanel panelItems;
-  private UnJLabel lbDataItem;
-  private UnJLabel lbDeptoItem;
-  private editFormatado dataItem;
-  private EditPratic deptoItem;
-  private UnJLabel lbGrupoItem;
-  private UnJLabel lbSubGrupoItem;
-  private EditPratic grupoItem;
-  private EditPratic subGrupoItem;
+  private JPanel lbCdcQtd;
+  private UnJLabel lbCdcDat;
+  private UnJLabel lbDepCod;
+  private editFormatado cdcDat;
+  private EditPratic depCod;
+  private UnJLabel lbGruCod;
+  private UnJLabel lbSucCod;
+  private EditPratic gruCod;
+  private EditPratic subCod;
   private UnJLabel lbQtdItem;
-  private UnJLabel lbValorItem;
-  private editFormatado quantItem;
-  private editFormatado valorItem;
+  private UnJLabel lbCdcVal;
+  private editFormatado cdcQtd;
+  private editFormatado cdcVal;
   private UnJLabel lbDescGrupoItem;
   private UnJLabel lbDescSubGrupoItem;
   private UnJLabel lbDescDepto;
   private UnJButton btnLancar;
   private UnJTextoLivre ipvObs;
-  private UnJLabel lbCodLancamento;
-  private EditPratic codLan;
-  private UnJLabel njlblSequncia;
-  private UnJLabel labelSequencia;
+  private UnJLabel lbMveIde;
+  private EditPratic mveIde;
+  private UnJLabel lbCdcSeq;
+  private UnJLabel cdcSeq;
 
-  public CadasControleDeViagem() {
+  public CadasControleDeCarregamento() {
 	initialize();
 	limpaTela();
 	limparItens();
 	setCampoPreferredSizeEmpresa(new Dimension(108, 19));
-	setCampoTelaTrabalho(getCodLan());
-	setCampoFocoAberturaTela(getCodLan());
+	setCampoTelaTrabalho(getMveIde());
+	setCampoFocoAberturaTela(getMveIde());
   }
 
   private void initialize() {
 	this.setMinimumSize(new Dimension(900, 690));
 	this.setPreferredSize(new Dimension(900, 690));
 	this.setSize(new Dimension(900, 623));
-	this.setTitle("Controle de Viagem");
+	this.setTitle("Cadastro de Controle de Viagem");
 	this.setCodigoTela("4305");
 	this.setFocoAutomaticoGravaTela(false);
-	getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
+	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasControleDeViagem = null; // Evento para não bloquear a tela
-														 // de abrir
+		DeskPratic.telasFinan.abrirCadasControleDeCarregamento = null; // Evento para não bloquear a tela
+		// de abrir
 	  }
 	});
 
@@ -138,11 +138,11 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_panelCampos.gridx = 0;
 	  gbc_panelCampos.gridy = 0;
 	  panelCentral.add(getPanelCampos(), gbc_panelCampos);
-	  GridBagConstraints gbc_panelItems = new GridBagConstraints();
-	  gbc_panelItems.fill = GridBagConstraints.BOTH;
-	  gbc_panelItems.gridx = 0;
-	  gbc_panelItems.gridy = 1;
-	  panelCentral.add(getPanelItems(), gbc_panelItems);
+	  GridBagConstraints gbc_lbCdcQtd = new GridBagConstraints();
+	  gbc_lbCdcQtd.fill = GridBagConstraints.BOTH;
+	  gbc_lbCdcQtd.gridx = 0;
+	  gbc_lbCdcQtd.gridy = 1;
+	  panelCentral.add(getLbCdcQtd(), gbc_lbCdcQtd);
 	  GridBagConstraints gbc_TabelaRes = new GridBagConstraints();
 	  gbc_TabelaRes.fill = GridBagConstraints.BOTH;
 	  gbc_TabelaRes.gridx = 0;
@@ -179,29 +179,29 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_filCod.gridx = 1;
 	  gbc_filCod.gridy = 0;
 	  panelCampos.add(getFilCod(), gbc_filCod);
-	  GridBagConstraints gbc_lbFilCod = new GridBagConstraints();
-	  gbc_lbFilCod.fill = GridBagConstraints.BOTH;
-	  gbc_lbFilCod.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbFilCod.gridwidth = 11;
-	  gbc_lbFilCod.gridx = 2;
-	  gbc_lbFilCod.gridy = 0;
-	  panelCampos.add(getLbDescFilCod(), gbc_lbFilCod);
+	  GridBagConstraints gbc_lbDescFilCod = new GridBagConstraints();
+	  gbc_lbDescFilCod.fill = GridBagConstraints.BOTH;
+	  gbc_lbDescFilCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbDescFilCod.gridwidth = 11;
+	  gbc_lbDescFilCod.gridx = 2;
+	  gbc_lbDescFilCod.gridy = 0;
+	  panelCampos.add(getLbDescFilCod(), gbc_lbDescFilCod);
 	  GridBagConstraints gbc_menuItem = new GridBagConstraints();
 	  gbc_menuItem.gridx = 10;
 	  gbc_menuItem.gridy = 0;
-	  GridBagConstraints gbc_lbCodLancamento = new GridBagConstraints();
-	  gbc_lbCodLancamento.anchor = GridBagConstraints.WEST;
-	  gbc_lbCodLancamento.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbCodLancamento.gridx = 0;
-	  gbc_lbCodLancamento.gridy = 1;
-	  panelCampos.add(getLbCodLancamento(), gbc_lbCodLancamento);
-	  GridBagConstraints gbc_codLan = new GridBagConstraints();
-	  gbc_codLan.gridwidth = 2;
-	  gbc_codLan.insets = new Insets(2, 3, 0, 0);
-	  gbc_codLan.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_codLan.gridx = 1;
-	  gbc_codLan.gridy = 1;
-	  panelCampos.add(getCodLan(), gbc_codLan);
+	  GridBagConstraints gbc_lbMveIde = new GridBagConstraints();
+	  gbc_lbMveIde.anchor = GridBagConstraints.WEST;
+	  gbc_lbMveIde.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbMveIde.gridx = 0;
+	  gbc_lbMveIde.gridy = 1;
+	  panelCampos.add(getLbMveIde(), gbc_lbMveIde);
+	  GridBagConstraints gbc_mveIde = new GridBagConstraints();
+	  gbc_mveIde.gridwidth = 2;
+	  gbc_mveIde.insets = new Insets(2, 3, 0, 0);
+	  gbc_mveIde.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_mveIde.gridx = 1;
+	  gbc_mveIde.gridy = 1;
+	  panelCampos.add(getMveIde(), gbc_mveIde);
 
 	  GridBagConstraints gbc_lbPlacaVeiculo = new GridBagConstraints();
 	  gbc_lbPlacaVeiculo.insets = new Insets(2, 3, 0, 0);
@@ -216,13 +216,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_placaCod.gridx = 1;
 	  gbc_placaCod.gridy = 2;
 	  panelCampos.add(getVeiPla(), gbc_placaCod);
-	  GridBagConstraints gbc_descPlaca = new GridBagConstraints();
-	  gbc_descPlaca.fill = GridBagConstraints.BOTH;
-	  gbc_descPlaca.insets = new Insets(2, 3, 2, 3);
-	  gbc_descPlaca.gridwidth = 4;
-	  gbc_descPlaca.gridx = 3;
-	  gbc_descPlaca.gridy = 2;
-	  panelCampos.add(getDescVeiPla(), gbc_descPlaca);
+	  GridBagConstraints gbc_lbDescVeiPla = new GridBagConstraints();
+	  gbc_lbDescVeiPla.fill = GridBagConstraints.BOTH;
+	  gbc_lbDescVeiPla.insets = new Insets(2, 3, 2, 3);
+	  gbc_lbDescVeiPla.gridwidth = 4;
+	  gbc_lbDescVeiPla.gridx = 3;
+	  gbc_lbDescVeiPla.gridy = 2;
+	  panelCampos.add(getLbDescVeiPla(), gbc_lbDescVeiPla);
 	  GridBagConstraints gbc_lbCodMot = new GridBagConstraints();
 	  gbc_lbCodMot.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbCodMot.anchor = GridBagConstraints.WEST;
@@ -235,19 +235,19 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_codMot.gridx = 8;
 	  gbc_codMot.gridy = 2;
 	  panelCampos.add(getFunCod(), gbc_codMot);
-	  GridBagConstraints gbc_lbDescMot = new GridBagConstraints();
-	  gbc_lbDescMot.fill = GridBagConstraints.BOTH;
-	  gbc_lbDescMot.insets = new Insets(2, 3, 0, 3);
-	  gbc_lbDescMot.gridwidth = 4;
-	  gbc_lbDescMot.gridx = 9;
-	  gbc_lbDescMot.gridy = 2;
-	  panelCampos.add(getLbDescMot(), gbc_lbDescMot);
-	  GridBagConstraints gbc_lbNomeMot = new GridBagConstraints();
-	  gbc_lbNomeMot.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbNomeMot.anchor = GridBagConstraints.WEST;
-	  gbc_lbNomeMot.gridx = 0;
-	  gbc_lbNomeMot.gridy = 3;
-	  panelCampos.add(getlbNomeMot(), gbc_lbNomeMot);
+	  GridBagConstraints gbc_lbDescFunCod = new GridBagConstraints();
+	  gbc_lbDescFunCod.fill = GridBagConstraints.BOTH;
+	  gbc_lbDescFunCod.insets = new Insets(2, 3, 0, 3);
+	  gbc_lbDescFunCod.gridwidth = 4;
+	  gbc_lbDescFunCod.gridx = 9;
+	  gbc_lbDescFunCod.gridy = 2;
+	  panelCampos.add(getLbDescFunCod(), gbc_lbDescFunCod);
+	  GridBagConstraints gbc_lbFunNom = new GridBagConstraints();
+	  gbc_lbFunNom.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbFunNom.anchor = GridBagConstraints.WEST;
+	  gbc_lbFunNom.gridx = 0;
+	  gbc_lbFunNom.gridy = 3;
+	  panelCampos.add(getlbNomeMot(), gbc_lbFunNom);
 	  GridBagConstraints gbc_nomeMot = new GridBagConstraints();
 	  gbc_nomeMot.gridwidth = 12;
 	  gbc_nomeMot.insets = new Insets(2, 3, 0, 3);
@@ -291,13 +291,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_cidOrigem.gridx = 1;
 	  gbc_cidOrigem.gridy = 5;
 	  panelCampos.add(getOriPre(), gbc_cidOrigem);
-	  GridBagConstraints gbc_lbDescCidOrigem = new GridBagConstraints();
-	  gbc_lbDescCidOrigem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbDescCidOrigem.fill = GridBagConstraints.BOTH;
-	  gbc_lbDescCidOrigem.gridwidth = 5;
-	  gbc_lbDescCidOrigem.gridx = 2;
-	  gbc_lbDescCidOrigem.gridy = 5;
-	  panelCampos.add(getLbDescCidOrigem(), gbc_lbDescCidOrigem);
+	  GridBagConstraints gbc_lbDescOriPre = new GridBagConstraints();
+	  gbc_lbDescOriPre.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbDescOriPre.fill = GridBagConstraints.BOTH;
+	  gbc_lbDescOriPre.gridwidth = 5;
+	  gbc_lbDescOriPre.gridx = 2;
+	  gbc_lbDescOriPre.gridy = 5;
+	  panelCampos.add(getLbDescOriPre(), gbc_lbDescOriPre);
 	  GridBagConstraints gbc_lbCidDestino = new GridBagConstraints();
 	  gbc_lbCidDestino.insets = new Insets(2, 3, 2, 3);
 	  gbc_lbCidDestino.anchor = GridBagConstraints.EAST;
@@ -310,13 +310,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  gbc_cidFim.gridx = 8;
 	  gbc_cidFim.gridy = 5;
 	  panelCampos.add(getDesPre(), gbc_cidFim);
-	  GridBagConstraints gbc_lbDescCidDestino = new GridBagConstraints();
-	  gbc_lbDescCidDestino.fill = GridBagConstraints.BOTH;
-	  gbc_lbDescCidDestino.insets = new Insets(2, 3, 0, 3);
-	  gbc_lbDescCidDestino.gridwidth = 4;
-	  gbc_lbDescCidDestino.gridx = 9;
-	  gbc_lbDescCidDestino.gridy = 5;
-	  panelCampos.add(getLbDescCidDestino(), gbc_lbDescCidDestino);
+	  GridBagConstraints gbc_lbDescDesPre = new GridBagConstraints();
+	  gbc_lbDescDesPre.fill = GridBagConstraints.BOTH;
+	  gbc_lbDescDesPre.insets = new Insets(2, 3, 0, 3);
+	  gbc_lbDescDesPre.gridwidth = 4;
+	  gbc_lbDescDesPre.gridx = 9;
+	  gbc_lbDescDesPre.gridy = 5;
+	  panelCampos.add(getLbDescDesPre(), gbc_lbDescDesPre);
 	  GridBagConstraints gbc_lbKmSaida = new GridBagConstraints();
 	  gbc_lbKmSaida.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbKmSaida.anchor = GridBagConstraints.WEST;
@@ -407,140 +407,140 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return panelCampos;
   }
 
-  private JPanel getPanelItems() {
-	if (panelItems == null) {
-	  panelItems = new JPanel();
-	  panelItems.setMinimumSize(new Dimension(100, 60));
-	  panelItems.setPreferredSize(new Dimension(100, 60));
-	  panelItems.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-	  GridBagLayout gbl_panelItems = new GridBagLayout();
-	  gbl_panelItems.columnWidths = new int[] { 100, 0, 0, 72, 117, 80, 76, 23, 44, 0, 0, 0, 40, 83, 0 };
-	  gbl_panelItems.rowHeights = new int[] { 25, 25, 25, 25, 0 };
-	  gbl_panelItems.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-		  0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-	  gbl_panelItems.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-	  panelItems.setLayout(gbl_panelItems);
-	  GridBagConstraints gbc_lbDataItem = new GridBagConstraints();
-	  gbc_lbDataItem.fill = GridBagConstraints.BOTH;
-	  gbc_lbDataItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbDataItem.gridx = 0;
-	  gbc_lbDataItem.gridy = 0;
-	  panelItems.add(getLbDataItem(), gbc_lbDataItem);
-	  GridBagConstraints gbc_dataItem = new GridBagConstraints();
-	  gbc_dataItem.gridwidth = 2;
-	  gbc_dataItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_dataItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_dataItem.gridx = 1;
-	  gbc_dataItem.gridy = 0;
-	  panelItems.add(getDataItem(), gbc_dataItem);
+  private JPanel getLbCdcQtd() {
+	if (lbCdcQtd == null) {
+	  lbCdcQtd = new JPanel();
+	  lbCdcQtd.setMinimumSize(new Dimension(100, 60));
+	  lbCdcQtd.setPreferredSize(new Dimension(100, 60));
+	  lbCdcQtd.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+	  GridBagLayout gbl_lbCdcQtd = new GridBagLayout();
+	  gbl_lbCdcQtd.columnWidths = new int[] { 100, 0, 0, 72, 117, 80, 76, 23, 44, 0, 0, 0, 40, 83, 0 };
+	  gbl_lbCdcQtd.rowHeights = new int[] { 25, 25, 25, 25, 0 };
+	  gbl_lbCdcQtd.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		  0.0, 0.0, 1.0, Double.MIN_VALUE };
+	  gbl_lbCdcQtd.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+	  lbCdcQtd.setLayout(gbl_lbCdcQtd);
+	  GridBagConstraints gbc_lbCdcDat = new GridBagConstraints();
+	  gbc_lbCdcDat.fill = GridBagConstraints.BOTH;
+	  gbc_lbCdcDat.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbCdcDat.gridx = 0;
+	  gbc_lbCdcDat.gridy = 0;
+	  lbCdcQtd.add(getLbCdcDat(), gbc_lbCdcDat);
+	  GridBagConstraints gbc_cdcDat = new GridBagConstraints();
+	  gbc_cdcDat.gridwidth = 2;
+	  gbc_cdcDat.insets = new Insets(2, 3, 0, 0);
+	  gbc_cdcDat.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_cdcDat.gridx = 1;
+	  gbc_cdcDat.gridy = 0;
+	  lbCdcQtd.add(getCdcDat(), gbc_cdcDat);
 	  GridBagConstraints gbc_lbQtdItem = new GridBagConstraints();
 	  gbc_lbQtdItem.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbQtdItem.gridx = 8;
 	  gbc_lbQtdItem.gridy = 0;
-	  panelItems.add(getLbQtdItem(), gbc_lbQtdItem);
-	  GridBagConstraints gbc_QuantItem = new GridBagConstraints();
-	  gbc_QuantItem.gridwidth = 2;
-	  gbc_QuantItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_QuantItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_QuantItem.gridx = 9;
-	  gbc_QuantItem.gridy = 0;
-	  panelItems.add(getQuantItem(), gbc_QuantItem);
-	  GridBagConstraints gbc_lbDeptoItem = new GridBagConstraints();
-	  gbc_lbDeptoItem.fill = GridBagConstraints.BOTH;
-	  gbc_lbDeptoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbDeptoItem.gridx = 0;
-	  gbc_lbDeptoItem.gridy = 1;
-	  panelItems.add(getLbDeptoItem(), gbc_lbDeptoItem);
-	  GridBagConstraints gbc_DeptoItem = new GridBagConstraints();
-	  gbc_DeptoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_DeptoItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_DeptoItem.gridx = 1;
-	  gbc_DeptoItem.gridy = 1;
-	  panelItems.add(getDeptoItem(), gbc_DeptoItem);
+	  lbCdcQtd.add(getLbQtdItem(), gbc_lbQtdItem);
+	  GridBagConstraints gbc_cdcQtd = new GridBagConstraints();
+	  gbc_cdcQtd.gridwidth = 2;
+	  gbc_cdcQtd.insets = new Insets(2, 3, 0, 0);
+	  gbc_cdcQtd.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_cdcQtd.gridx = 9;
+	  gbc_cdcQtd.gridy = 0;
+	  lbCdcQtd.add(getCdcQtd(), gbc_cdcQtd);
+	  GridBagConstraints gbc_lbDepCod = new GridBagConstraints();
+	  gbc_lbDepCod.fill = GridBagConstraints.BOTH;
+	  gbc_lbDepCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbDepCod.gridx = 0;
+	  gbc_lbDepCod.gridy = 1;
+	  lbCdcQtd.add(getLbDepCod(), gbc_lbDepCod);
+	  GridBagConstraints gbc_depCod = new GridBagConstraints();
+	  gbc_depCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_depCod.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_depCod.gridx = 1;
+	  gbc_depCod.gridy = 1;
+	  lbCdcQtd.add(getDepCod(), gbc_depCod);
 	  GridBagConstraints gbc_lbDescDepto = new GridBagConstraints();
 	  gbc_lbDescDepto.fill = GridBagConstraints.BOTH;
 	  gbc_lbDescDepto.gridwidth = 5;
 	  gbc_lbDescDepto.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbDescDepto.gridx = 2;
 	  gbc_lbDescDepto.gridy = 1;
-	  panelItems.add(getLbDescDepto(), gbc_lbDescDepto);
-	  GridBagConstraints gbc_lbValorItem = new GridBagConstraints();
-	  gbc_lbValorItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbValorItem.gridx = 8;
-	  gbc_lbValorItem.gridy = 1;
-	  panelItems.add(getLbValorItem(), gbc_lbValorItem);
-	  GridBagConstraints gbc_ValorItem = new GridBagConstraints();
-	  gbc_ValorItem.gridwidth = 2;
-	  gbc_ValorItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_ValorItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_ValorItem.gridx = 9;
-	  gbc_ValorItem.gridy = 1;
-	  panelItems.add(getValorItem(), gbc_ValorItem);
-	  GridBagConstraints gbc_lbGrupoItem = new GridBagConstraints();
-	  gbc_lbGrupoItem.fill = GridBagConstraints.BOTH;
-	  gbc_lbGrupoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbGrupoItem.gridx = 0;
-	  gbc_lbGrupoItem.gridy = 2;
-	  panelItems.add(getLbGrupoItem(), gbc_lbGrupoItem);
-	  GridBagConstraints gbc_GrupoItem = new GridBagConstraints();
-	  gbc_GrupoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_GrupoItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_GrupoItem.gridx = 1;
-	  gbc_GrupoItem.gridy = 2;
-	  panelItems.add(getGrupoItem(), gbc_GrupoItem);
+	  lbCdcQtd.add(getLbDescDepto(), gbc_lbDescDepto);
+	  GridBagConstraints gbc_lbCdcVal = new GridBagConstraints();
+	  gbc_lbCdcVal.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbCdcVal.gridx = 8;
+	  gbc_lbCdcVal.gridy = 1;
+	  lbCdcQtd.add(getLbCdcVal(), gbc_lbCdcVal);
+	  GridBagConstraints gbc_cdcVal = new GridBagConstraints();
+	  gbc_cdcVal.gridwidth = 2;
+	  gbc_cdcVal.insets = new Insets(2, 3, 0, 0);
+	  gbc_cdcVal.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_cdcVal.gridx = 9;
+	  gbc_cdcVal.gridy = 1;
+	  lbCdcQtd.add(getCdcVal(), gbc_cdcVal);
+	  GridBagConstraints gbc_lbGruCod = new GridBagConstraints();
+	  gbc_lbGruCod.fill = GridBagConstraints.BOTH;
+	  gbc_lbGruCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbGruCod.gridx = 0;
+	  gbc_lbGruCod.gridy = 2;
+	  lbCdcQtd.add(getLbGruCod(), gbc_lbGruCod);
+	  GridBagConstraints gbc_gruCod = new GridBagConstraints();
+	  gbc_gruCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_gruCod.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_gruCod.gridx = 1;
+	  gbc_gruCod.gridy = 2;
+	  lbCdcQtd.add(getGruCod(), gbc_gruCod);
 	  GridBagConstraints gbc_lbDescGrupoItem = new GridBagConstraints();
 	  gbc_lbDescGrupoItem.fill = GridBagConstraints.BOTH;
 	  gbc_lbDescGrupoItem.gridwidth = 6;
 	  gbc_lbDescGrupoItem.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbDescGrupoItem.gridx = 2;
 	  gbc_lbDescGrupoItem.gridy = 2;
-	  panelItems.add(getLbDescGrupoItem(), gbc_lbDescGrupoItem);
-	  GridBagConstraints gbc_njlblSequncia = new GridBagConstraints();
-	  gbc_njlblSequncia.insets = new Insets(2, 3, 0, 0);
-	  gbc_njlblSequncia.fill = GridBagConstraints.BOTH;
-	  gbc_njlblSequncia.gridx = 8;
-	  gbc_njlblSequncia.gridy = 2;
-	  panelItems.add(getNjlblSequncia(), gbc_njlblSequncia);
-	  GridBagConstraints gbc_labelSequencia = new GridBagConstraints();
-	  gbc_labelSequencia.gridwidth = 2;
-	  gbc_labelSequencia.insets = new Insets(2, 3, 0, 0);
-	  gbc_labelSequencia.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_labelSequencia.gridx = 9;
-	  gbc_labelSequencia.gridy = 2;
-	  panelItems.add(getLabelSequencia(), gbc_labelSequencia);
+	  lbCdcQtd.add(getLbDescGrupoItem(), gbc_lbDescGrupoItem);
+	  GridBagConstraints gbc_lbCdcSeq = new GridBagConstraints();
+	  gbc_lbCdcSeq.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbCdcSeq.fill = GridBagConstraints.BOTH;
+	  gbc_lbCdcSeq.gridx = 8;
+	  gbc_lbCdcSeq.gridy = 2;
+	  lbCdcQtd.add(getLbCdcSeq(), gbc_lbCdcSeq);
+	  GridBagConstraints gbc_cdcSeq = new GridBagConstraints();
+	  gbc_cdcSeq.gridwidth = 2;
+	  gbc_cdcSeq.insets = new Insets(2, 3, 0, 0);
+	  gbc_cdcSeq.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_cdcSeq.gridx = 9;
+	  gbc_cdcSeq.gridy = 2;
+	  lbCdcQtd.add(getCdcSeq(), gbc_cdcSeq);
 	  GridBagConstraints gbc_ipvObs = new GridBagConstraints();
 	  gbc_ipvObs.fill = GridBagConstraints.BOTH;
 	  gbc_ipvObs.insets = new Insets(2, 3, 0, 3);
 	  gbc_ipvObs.gridx = 13;
 	  gbc_ipvObs.gridy = 2;
-	  panelItems.add(getIpvObs(), gbc_ipvObs);
-	  GridBagConstraints gbc_lbSubGrupoItem = new GridBagConstraints();
-	  gbc_lbSubGrupoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbSubGrupoItem.anchor = GridBagConstraints.WEST;
-	  gbc_lbSubGrupoItem.gridx = 0;
-	  gbc_lbSubGrupoItem.gridy = 3;
-	  panelItems.add(getLbSubGrupoItem(), gbc_lbSubGrupoItem);
-	  GridBagConstraints gbc_SubGrupoItem = new GridBagConstraints();
-	  gbc_SubGrupoItem.insets = new Insets(2, 3, 0, 0);
-	  gbc_SubGrupoItem.fill = GridBagConstraints.HORIZONTAL;
-	  gbc_SubGrupoItem.gridx = 1;
-	  gbc_SubGrupoItem.gridy = 3;
-	  panelItems.add(getSubGrupoItem(), gbc_SubGrupoItem);
+	  lbCdcQtd.add(getIpvObs(), gbc_ipvObs);
+	  GridBagConstraints gbc_lbSucCod = new GridBagConstraints();
+	  gbc_lbSucCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbSucCod.anchor = GridBagConstraints.WEST;
+	  gbc_lbSucCod.gridx = 0;
+	  gbc_lbSucCod.gridy = 3;
+	  lbCdcQtd.add(getLbSucCod(), gbc_lbSucCod);
+	  GridBagConstraints gbc_subCod = new GridBagConstraints();
+	  gbc_subCod.insets = new Insets(2, 3, 0, 0);
+	  gbc_subCod.fill = GridBagConstraints.HORIZONTAL;
+	  gbc_subCod.gridx = 1;
+	  gbc_subCod.gridy = 3;
+	  lbCdcQtd.add(getSubCod(), gbc_subCod);
 	  GridBagConstraints gbc_lbDescSubGrupoItem = new GridBagConstraints();
 	  gbc_lbDescSubGrupoItem.fill = GridBagConstraints.BOTH;
 	  gbc_lbDescSubGrupoItem.gridwidth = 6;
 	  gbc_lbDescSubGrupoItem.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbDescSubGrupoItem.gridx = 2;
 	  gbc_lbDescSubGrupoItem.gridy = 3;
-	  panelItems.add(getLbDescSubGrupoItem(), gbc_lbDescSubGrupoItem);
+	  lbCdcQtd.add(getLbDescSubGrupoItem(), gbc_lbDescSubGrupoItem);
 	  GridBagConstraints gbc_btnLancar = new GridBagConstraints();
 	  gbc_btnLancar.insets = new Insets(2, 3, 0, 3);
 	  gbc_btnLancar.fill = GridBagConstraints.BOTH;
 	  gbc_btnLancar.gridx = 13;
 	  gbc_btnLancar.gridy = 3;
-	  panelItems.add(getBtnLancar(), gbc_btnLancar);
+	  lbCdcQtd.add(getBtnLancar(), gbc_btnLancar);
 	}
-	return panelItems;
+	return lbCdcQtd;
   }
 
   public boolean gravaTela() {
@@ -558,7 +558,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
 	  getProc().setString(param++, getEmpCod(), stp);
 	  getProc().setShort(param++, getFilCod(), stp);
-	  getProc().setLong(param++, getCodLan(), stp);
+	  getProc().setLong(param++, getMveIde(), stp);
 	  getProc().setString(param++, getVeiPla(), stp);
 	  getProc().setInt(param++, getFunCod(), stp);
 
@@ -596,15 +596,15 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 		limpaTela();
 		limparItens();
 		getTabelaRes().limpaTebela();
-		getCodLan().requestFocus();
+		getMveIde().requestFocus();
 	  }
 	  else if (getAcaoTela().equalsIgnoreCase("I")) {
-		getCodLan().setEnabled(true);
-		getCodLan().setText(String.valueOf(getProc().getProcedureProcesso()));
-		getCodLan().requestFocus();
+		getMveIde().setEnabled(true);
+		getMveIde().setText(String.valueOf(getProc().getProcedureProcesso()));
+		getMveIde().requestFocus();
 	  }
 	  else {
-		getCodLan().requestFocus();
+		getMveIde().requestFocus();
 	  }
 
 	} catch (SQLException sqlEx) {
@@ -615,18 +615,18 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  return false;
 	}
 
-	montaTela(getCodLan().getText());
-	getCodLan().requestFocus();
+	montaTela(getMveIde().getText());
+	getMveIde().requestFocus();
 
 	return true;
   }
 
   public boolean montaTela(String codigo) {
 	limpaTela();
-	getCodLan().setEnabled(true);
+	getMveIde().setEnabled(true);
 
-	if (getEmpCod().isVazio() || getFilCod().isVazio() || getCodLan().isVazio()
-		|| !getCodLan().isVazio() && TrataString.isNullOrVazia(codigo)) {
+	if (getEmpCod().isVazio() || getFilCod().isVazio() || getMveIde().isVazio()
+		|| !getMveIde().isVazio() && TrataString.isNullOrVazia(codigo)) {
 	  limpaTela();
 	  limparItens();
 	  return false;
@@ -642,13 +642,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
 	  if (res.next()) {
 		setAcaoTela("A");
-		CompTelas.habilitaDesabilitaCamposPanel(true, getPanelItems());
+		CompTelas.habilitaDesabilitaCamposPanel(true, getLbCdcQtd());
 		limpaTela();
-		getCodLan().setEnabled(true);
+		getMveIde().setEnabled(true);
 		CompTelas.montaCamposResultSet(res, getPanelCampos(), false);
-		getCodLan().setText(TrataString.insereQuebraLinha(res.getString("mveide")));
+		getMveIde().setText(TrataString.insereQuebraLinha(res.getString("mveide")));
 		setMensagemExclusao("Tem certeza que deseja excluir O PEDIDO DE SERVIÇO: \n ->> "
-			+ getCodLan().getText() + " ?");
+			+ getMveIde().getText() + " ?");
 
 		montaTelaItens();
 	  }
@@ -690,9 +690,9 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
   public void limparItens() {
 
-	CompTelas.limparCampos(getPanelItems(), false);
+	CompTelas.limparCampos(getLbCdcQtd(), false);
 	getIpvObs().limpar();
-	getLabelSequencia().limpar();
+	getCdcSeq().limpar();
   }
 
   public boolean gravaTelaItens(String acao) {
@@ -704,10 +704,10 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  stp.registerOutParameter(param++, Types.INTEGER);
 	  stp.registerOutParameter(param++, Types.VARCHAR);
 
-	  getProc().setLong(param++, getCodLan(), stp);
+	  getProc().setLong(param++, getMveIde(), stp);
 
 	  if (getTabelaRes().isPegarDoGrid() == false) {
-		getProc().setInt(param++, getLabelSequencia().getText());
+		getProc().setInt(param++, getCdcSeq().getText());
 	  }
 	  else {
 		getProc().setInt(param++, getTabelaRes().getDadosExcluir("CDCSEQ"));
@@ -715,14 +715,14 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
 	  getProc().setString(param++, getEmpCod(), stp);
 	  getProc().setInt(param++, getFilCod(), stp);
-	  getProc().setDate(param++, getDataItem(), stp);
-	  getProc().setInt(param++, getDeptoItem(), stp);
-	  getProc().setInt(param++, getGrupoItem(), stp);
-	  getProc().setInt(param++, getSubGrupoItem(), stp);
+	  getProc().setDate(param++, getCdcDat(), stp);
+	  getProc().setInt(param++, getDepCod(), stp);
+	  getProc().setInt(param++, getGruCod(), stp);
+	  getProc().setInt(param++, getSubCod(), stp);
 
-	  getProc().setDouble(param++, getQuantItem(), stp);
+	  getProc().setDouble(param++, getCdcQtd(), stp);
 
-	  getProc().setDouble(param++, getValorItem(), stp);
+	  getProc().setDouble(param++, getCdcVal(), stp);
 	  getProc().setString(param++, getAcaoTela(getTabelaRes().getAcaoTela()));
 
 	  stp.execute();
@@ -739,7 +739,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  if (!getAcaoTela(getTabelaRes().getAcaoTela()).equalsIgnoreCase("E")) {
 		montaTelaItens();
 		limparItens();
-		getDataItem().requestFocus();
+		getCdcDat().requestFocus();
 	  }
 
 	} catch (SQLException sqlEx) {
@@ -757,19 +757,19 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
 	getTabelaRes().limpaTebela();
 
-	if (getEmpCod().isVazio() || getFilCod().isVazio() || getCodLan().isVazio()) {
+	if (getEmpCod().isVazio() || getFilCod().isVazio() || getMveIde().isVazio()) {
 	  limpaTela();
 	  return false;
 	}
 
 	getTabelaRes().setCampoDadosTabelaWhere(" empcod = '" + getEmpCod().getText() + "' and filcod = "
-		+ getFilCod().getText() + " and cdcide = " + getCodLan().getText());
+		+ getFilCod().getText() + " and cdcide = " + getMveIde().getText());
 
 	return getTabelaRes().montaTela("");
   }
 
   public boolean validaTelaItens() {
-	return CompTelas.validaTelaAutomatico(getPanelItems(), false);
+	return CompTelas.validaTelaAutomatico(getLbCdcQtd(), false);
   }
 
   public boolean limpaTela() {
@@ -808,11 +808,11 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 
   public boolean novaTela() {
 
-	getCodLan().transferFocus();
+	getMveIde().transferFocus();
 	super.novaTela();
-	CompTelas.habilitaDesabilitaCamposPanel(false, getPanelItems());
-	getCodLan().limpar();
-	getCodLan().setEnabled(false);
+	CompTelas.habilitaDesabilitaCamposPanel(false, getLbCdcQtd());
+	getMveIde().limpar();
+	getMveIde().setEnabled(false);
 	setAcaoTela("I");
 	limparItens();
 	limpaTela();
@@ -838,9 +838,9 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  tabelaRes.getTabela().setColunasCentralizadas("1");
 	  tabelaRes.setCampoDadosTabelaOrderBy("CDCSEQ");
 	  tabelaRes.setConexao(DeskPratic.getConexao());
-	  tabelaRes.setCampoFocoAlterarItens(getDataItem());
+	  tabelaRes.setCampoFocoAlterarItens(getCdcDat());
 	  tabelaRes.setFocusable(false);
-	  tabelaRes.setPanelCampos(getPanelItems());
+	  tabelaRes.setPanelCampos(getLbCdcQtd());
 	  // tabelaRes.getTabela().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	  tabelaRes.addUnJTablePraticListener(
 		  new br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePraticListener() {
@@ -873,26 +873,26 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  filCod.setAuxiliarDeTrabalho("filcod");
 	  filCod.setCampoEmpresa(super.getEmpCod());
 	  filCod.setCampoLimpaTelaAutomatico(false);
-	  lbFilCod = new UnJLabel();
-	  lbFilCod.setText("lbFilCod");
-	  lbFilCod.setPreferredSize(new Dimension(100, 14));
-	  lbFilCod.setMinimumSize(new Dimension(100, 14));
-	  lbFilCod.setMaximumSize(new Dimension(100, 14));
-	  lbFilCod.setFont(new Font("Arial", Font.BOLD, 11));
-	  filCod.setLabelDescricao(lbFilCod);
+	  lbDescFilCod = new UnJLabel();
+	  lbDescFilCod.setText("lbFilCod");
+	  lbDescFilCod.setPreferredSize(new Dimension(100, 14));
+	  lbDescFilCod.setMinimumSize(new Dimension(100, 14));
+	  lbDescFilCod.setMaximumSize(new Dimension(100, 14));
+	  lbDescFilCod.setFont(new Font("Arial", Font.BOLD, 11));
+	  filCod.setLabelDescricao(lbDescFilCod);
 	}
 	return filCod;
   }
 
   private UnJLabel getLbDescFilCod() {
-	if (lbFilCod == null) {
-	  lbFilCod = new UnJLabel();
-	  lbFilCod.setFont(new Font("Arial", Font.BOLD, 11));
-	  lbFilCod.setText("lbFilCod");
-	  lbFilCod.limpar();
+	if (lbDescFilCod == null) {
+	  lbDescFilCod = new UnJLabel();
+	  lbDescFilCod.setFont(new Font("Arial", Font.BOLD, 11));
+	  lbDescFilCod.setText("lbFilCod");
+	  lbDescFilCod.limpar();
 
 	}
-	return lbFilCod;
+	return lbDescFilCod;
   }
 
   private UnJLabel getLbVeiPla() {
@@ -924,7 +924,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  veiPla.setMaximumSize(new Dimension(40, 19));
 	  veiPla.setMinimumSize(new Dimension(40, 19));
 	  veiPla.setPreferredSize(new Dimension(40, 19));
-	  veiPla.setLabelDescricao(getDescVeiPla());
+	  veiPla.setLabelDescricao(getLbDescVeiPla());
 	  veiPla.setName("veipla");
 	  veiPla.setName2("Placa V\u00E9iculo do Ve\u00EDculo");
 	  veiPla.setTipoValidacao("veiculo");
@@ -932,13 +932,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  veiPla.setTipoFormatacao(16);
 	  veiPla.setSoNumeros(false);
 	  veiPla.setInputVerifier(DeskPratic.fctGeral.VALIDA_CAMPO);
-	  descVeiPla = new UnJLabel();
-	  descVeiPla.setName("VEIPLADES");
-	  descVeiPla.setText("lbDescPlaca");
-	  descVeiPla.setMinimumSize(new Dimension(80, 19));
-	  descVeiPla.setPreferredSize(new Dimension(80, 19));
-	  descVeiPla.setFont(new Font("Arial", Font.BOLD, 11));
-	  veiPla.setLabelDescricao(descVeiPla);
+	  lbDescVeiPla = new UnJLabel();
+	  lbDescVeiPla.setName("VEIPLADES");
+	  lbDescVeiPla.setText("lbDescPlaca");
+	  lbDescVeiPla.setMinimumSize(new Dimension(80, 19));
+	  lbDescVeiPla.setPreferredSize(new Dimension(80, 19));
+	  lbDescVeiPla.setFont(new Font("Arial", Font.BOLD, 11));
+	  veiPla.setLabelDescricao(lbDescVeiPla);
 	  veiPla.addUnEditListener(new br.com.praticsistemas.unprtcomps.editFormatadoListener() {
 		public void mostraPesquisa(br.com.praticsistemas.unprtcomps.editFormatadoEvent e) {
 		  pesquisar(veiPla);
@@ -953,7 +953,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	if (funCod == null) {
 	  funCod = new EditPratic();
 	  funCod.setTipoValidacao("es_funcionarios");
-	  funCod.setLabelDescricao(getLbDescMot());
+	  funCod.setLabelDescricao(getLbDescFunCod());
 	  funCod.setName("funcod");
 	  funCod.setCampoObrigatorio(false);
 	  funCod.setAuxiliarDeTrabalho("funcod");
@@ -971,13 +971,13 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
   }
 
   private UnJLabel getlbNomeMot() {
-	if (lbDescFunCod == null) {
-	  lbDescFunCod = new UnJLabel();
-	  lbDescFunCod.setMinimumSize(new Dimension(110, 19));
-	  lbDescFunCod.setPreferredSize(new Dimension(110, 19));
-	  lbDescFunCod.setText("Nome\u00A0do\u00A0motorista:");
+	if (lbFunNom == null) {
+	  lbFunNom = new UnJLabel();
+	  lbFunNom.setMinimumSize(new Dimension(110, 19));
+	  lbFunNom.setPreferredSize(new Dimension(110, 19));
+	  lbFunNom.setText("Nome\u00A0do\u00A0motorista:");
 	}
-	return lbDescFunCod;
+	return lbFunNom;
   }
 
   private UnEdit getFunNom() {
@@ -1219,14 +1219,14 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return mveObs;
   }
 
-  private UnJLabel getLbDescMot() {
-	if (lbDescMot == null) {
-	  lbDescMot = new UnJLabel();
-	  lbDescMot.setName("FUNNOM");
-	  lbDescMot.setText("lbDescMot");
-	  lbDescMot.setFont(new Font("Arial", Font.BOLD, 11));
+  private UnJLabel getLbDescFunCod() {
+	if (lbDescFunCod == null) {
+	  lbDescFunCod = new UnJLabel();
+	  lbDescFunCod.setName("FUNNOM");
+	  lbDescFunCod.setText("lbDescMot");
+	  lbDescFunCod.setFont(new Font("Arial", Font.BOLD, 11));
 	}
-	return lbDescMot;
+	return lbDescFunCod;
   }
 
   private UnJLabel getLbCalcValorFrete() {
@@ -1245,25 +1245,25 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return lbCalcValorFrete;
   }
 
-  private UnJLabel getDescVeiPla() {
-	if (descVeiPla == null) {
-	  descVeiPla = new UnJLabel();
+  private UnJLabel getLbDescVeiPla() {
+	if (lbDescVeiPla == null) {
+	  lbDescVeiPla = new UnJLabel();
 	}
-	return descVeiPla;
+	return lbDescVeiPla;
   }
 
-  private UnJLabel getLbDescCidOrigem() {
-	if (lbDescCidOrigem == null) {
-	  lbDescCidOrigem = new UnJLabel();
-	  lbDescCidOrigem.setName("ORIPREDES");
-	  lbDescCidOrigem.setMaximumSize(new Dimension(33333, 19));
-	  lbDescCidOrigem.setMinimumSize(new Dimension(100, 19));
-	  lbDescCidOrigem.setPreferredSize(new Dimension(100, 19));
-	  lbDescCidOrigem.setFont(new Font("Arial", Font.BOLD, 11));
-	  lbDescCidOrigem.setText("lbDescCidOrigem");
+  private UnJLabel getLbDescOriPre() {
+	if (lbDescOriPre == null) {
+	  lbDescOriPre = new UnJLabel();
+	  lbDescOriPre.setName("ORIPREDES");
+	  lbDescOriPre.setMaximumSize(new Dimension(33333, 19));
+	  lbDescOriPre.setMinimumSize(new Dimension(100, 19));
+	  lbDescOriPre.setPreferredSize(new Dimension(100, 19));
+	  lbDescOriPre.setFont(new Font("Arial", Font.BOLD, 11));
+	  lbDescOriPre.setText("lbDescCidOrigem");
 
 	}
-	return lbDescCidOrigem;
+	return lbDescOriPre;
   }
 
   private EditPratic getOriPre() {
@@ -1271,7 +1271,7 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	  oriPre = new EditPratic();
 	  oriPre.setMaximumSize(new Dimension(40, 19));
 	  oriPre.setMinimumSize(new Dimension(40, 19));
-	  oriPre.setLabelDescricao(getLbDescCidOrigem());
+	  oriPre.setLabelDescricao(getLbDescOriPre());
 	  oriPre.setCampoObrigatorio(false);
 	  oriPre.setTipoValidacao("MUNICIPIOS");
 	  oriPre.setName("ORIPRE");
@@ -1280,118 +1280,118 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return oriPre;
   }
 
-  private UnJLabel getLbDescCidDestino() {
-	if (lbDescCidDestino == null) {
-	  lbDescCidDestino = new UnJLabel();
-	  lbDescCidDestino.setName("DESPREDES");
-	  lbDescCidDestino.setPreferredSize(new Dimension(90, 19));
-	  lbDescCidDestino.setMaximumSize(new Dimension(333333, 19));
-	  lbDescCidDestino.setMinimumSize(new Dimension(90, 19));
-	  lbDescCidDestino.setFont(new Font("Arial", Font.BOLD, 11));
-	  lbDescCidDestino.setText("lbDescCidDestino");
+  private UnJLabel getLbDescDesPre() {
+	if (lbDescDesPre == null) {
+	  lbDescDesPre = new UnJLabel();
+	  lbDescDesPre.setName("DESPREDES");
+	  lbDescDesPre.setPreferredSize(new Dimension(90, 19));
+	  lbDescDesPre.setMaximumSize(new Dimension(333333, 19));
+	  lbDescDesPre.setMinimumSize(new Dimension(90, 19));
+	  lbDescDesPre.setFont(new Font("Arial", Font.BOLD, 11));
+	  lbDescDesPre.setText("lbDescCidDestino");
 
 	}
-	return lbDescCidDestino;
+	return lbDescDesPre;
   }
 
   private EditPratic getDesPre() {
 	if (desPre == null) {
 	  desPre = new EditPratic();
 	  desPre.setTipoValidacao("MUNICIPIOS");
-	  desPre.setLabelDescricao(getLbDescCidDestino());
+	  desPre.setLabelDescricao(getLbDescDesPre());
 	  desPre.setName("despre");
 	  desPre.setCampoObrigatorio(false);
 	}
 	return desPre;
   }
 
-  private UnJLabel getLbDataItem() {
-	if (lbDataItem == null) {
-	  lbDataItem = new UnJLabel();
-	  lbDataItem.setMaximumSize(new Dimension(110, 20));
-	  lbDataItem.setPreferredSize(new Dimension(110, 20));
-	  lbDataItem.setMinimumSize(new Dimension(110, 20));
-	  lbDataItem.setText("Data:");
+  private UnJLabel getLbCdcDat() {
+	if (lbCdcDat == null) {
+	  lbCdcDat = new UnJLabel();
+	  lbCdcDat.setMaximumSize(new Dimension(110, 20));
+	  lbCdcDat.setPreferredSize(new Dimension(110, 20));
+	  lbCdcDat.setMinimumSize(new Dimension(110, 20));
+	  lbCdcDat.setText("Data:");
 	}
-	return lbDataItem;
+	return lbCdcDat;
   }
 
-  private UnJLabel getLbDeptoItem() {
-	if (lbDeptoItem == null) {
-	  lbDeptoItem = new UnJLabel();
-	  lbDeptoItem.setPreferredSize(new Dimension(90, 20));
-	  lbDeptoItem.setMaximumSize(new Dimension(90, 20));
-	  lbDeptoItem.setMinimumSize(new Dimension(110, 20));
-	  lbDeptoItem.setForeground(Color.BLUE);
-	  lbDeptoItem.setText("Departamento:");
+  private UnJLabel getLbDepCod() {
+	if (lbDepCod == null) {
+	  lbDepCod = new UnJLabel();
+	  lbDepCod.setPreferredSize(new Dimension(90, 20));
+	  lbDepCod.setMaximumSize(new Dimension(90, 20));
+	  lbDepCod.setMinimumSize(new Dimension(110, 20));
+	  lbDepCod.setForeground(Color.BLUE);
+	  lbDepCod.setText("Departamento:");
 	}
-	return lbDeptoItem;
+	return lbDepCod;
   }
 
-  private editFormatado getDataItem() {
-	if (dataItem == null) {
-	  dataItem = new editFormatado();
-	  dataItem.setTipoFormatacao(4);
-	  dataItem.setName("CDCDAT");
+  private editFormatado getCdcDat() {
+	if (cdcDat == null) {
+	  cdcDat = new editFormatado();
+	  cdcDat.setTipoFormatacao(4);
+	  cdcDat.setName("CDCDAT");
 	}
-	return dataItem;
+	return cdcDat;
   }
 
-  private EditPratic getDeptoItem() {
-	if (deptoItem == null) {
-	  deptoItem = new EditPratic();
-	  deptoItem.setTipoValidacao("DEPARTAMENTOS");
-	  deptoItem.setCampoEmpresa(empCod);
-	  deptoItem.setLabelDescricao(getLbDescDepto());
-	  deptoItem.setName("DEPCOD");
+  private EditPratic getDepCod() {
+	if (depCod == null) {
+	  depCod = new EditPratic();
+	  depCod.setTipoValidacao("DEPARTAMENTOS");
+	  depCod.setCampoEmpresa(empCod);
+	  depCod.setLabelDescricao(getLbDescDepto());
+	  depCod.setName("DEPCOD");
 	}
-	return deptoItem;
+	return depCod;
   }
 
-  private UnJLabel getLbGrupoItem() {
-	if (lbGrupoItem == null) {
-	  lbGrupoItem = new UnJLabel();
-	  lbGrupoItem.setMaximumSize(new Dimension(110, 20));
-	  lbGrupoItem.setPreferredSize(new Dimension(110, 20));
-	  lbGrupoItem.setMinimumSize(new Dimension(110, 20));
-	  lbGrupoItem.setForeground(Color.BLUE);
-	  lbGrupoItem.setText("Grupo:");
+  private UnJLabel getLbGruCod() {
+	if (lbGruCod == null) {
+	  lbGruCod = new UnJLabel();
+	  lbGruCod.setMaximumSize(new Dimension(110, 20));
+	  lbGruCod.setPreferredSize(new Dimension(110, 20));
+	  lbGruCod.setMinimumSize(new Dimension(110, 20));
+	  lbGruCod.setForeground(Color.BLUE);
+	  lbGruCod.setText("Grupo:");
 	}
-	return lbGrupoItem;
+	return lbGruCod;
   }
 
-  private UnJLabel getLbSubGrupoItem() {
-	if (lbSubGrupoItem == null) {
-	  lbSubGrupoItem = new UnJLabel();
-	  lbSubGrupoItem.setMaximumSize(new Dimension(110, 20));
-	  lbSubGrupoItem.setPreferredSize(new Dimension(110, 20));
-	  lbSubGrupoItem.setMinimumSize(new Dimension(110, 20));
-	  lbSubGrupoItem.setForeground(Color.BLUE);
-	  lbSubGrupoItem.setText("Sub-Grupo:");
+  private UnJLabel getLbSucCod() {
+	if (lbSucCod == null) {
+	  lbSucCod = new UnJLabel();
+	  lbSucCod.setMaximumSize(new Dimension(110, 20));
+	  lbSucCod.setPreferredSize(new Dimension(110, 20));
+	  lbSucCod.setMinimumSize(new Dimension(110, 20));
+	  lbSucCod.setForeground(Color.BLUE);
+	  lbSucCod.setText("Sub-Grupo:");
 	}
-	return lbSubGrupoItem;
+	return lbSucCod;
   }
 
-  private EditPratic getGrupoItem() {
-	if (grupoItem == null) {
-	  grupoItem = new EditPratic();
-	  grupoItem.setTipoValidacao("grupos_despesas");
-	  grupoItem.setCampoEmpresa(empCod);
-	  grupoItem.setLabelDescricao(getLbDescGrupoItem());
-	  grupoItem.setName("GRUCOD");
+  private EditPratic getGruCod() {
+	if (gruCod == null) {
+	  gruCod = new EditPratic();
+	  gruCod.setTipoValidacao("grupos_despesas");
+	  gruCod.setCampoEmpresa(empCod);
+	  gruCod.setLabelDescricao(getLbDescGrupoItem());
+	  gruCod.setName("GRUCOD");
 	}
-	return grupoItem;
+	return gruCod;
   }
 
-  private EditPratic getSubGrupoItem() {
-	if (subGrupoItem == null) {
-	  subGrupoItem = new EditPratic();
-	  subGrupoItem.setTipoValidacao("ES_SUB_GRUPO_DEPESAS/GRUPOS_DEPESAS");
-	  subGrupoItem.setCampoEmpresa(empCod);
-	  subGrupoItem.setLabelDescricao(getLbDescSubGrupoItem());
-	  subGrupoItem.setName("SUBCOD");
+  private EditPratic getSubCod() {
+	if (subCod == null) {
+	  subCod = new EditPratic();
+	  subCod.setTipoValidacao("ES_SUB_GRUPO_DEPESAS/GRUPOS_DEPESAS");
+	  subCod.setCampoEmpresa(empCod);
+	  subCod.setLabelDescricao(getLbDescSubGrupoItem());
+	  subCod.setName("SUBCOD");
 	}
-	return subGrupoItem;
+	return subCod;
   }
 
   private UnJLabel getLbQtdItem() {
@@ -1402,31 +1402,31 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return lbQtdItem;
   }
 
-  private UnJLabel getLbValorItem() {
-	if (lbValorItem == null) {
-	  lbValorItem = new UnJLabel();
-	  lbValorItem.setText("Valor:");
+  private UnJLabel getLbCdcVal() {
+	if (lbCdcVal == null) {
+	  lbCdcVal = new UnJLabel();
+	  lbCdcVal.setText("Valor:");
 	}
-	return lbValorItem;
+	return lbCdcVal;
   }
 
-  private editFormatado getQuantItem() {
-	if (quantItem == null) {
-	  quantItem = new editFormatado();
-	  quantItem.setTipoFormatacao(7);
-	  quantItem.setQuantidadeCasasDecimais(6);
-	  quantItem.setName("CDCQTD");
+  private editFormatado getCdcQtd() {
+	if (cdcQtd == null) {
+	  cdcQtd = new editFormatado();
+	  cdcQtd.setTipoFormatacao(7);
+	  cdcQtd.setQuantidadeCasasDecimais(6);
+	  cdcQtd.setName("CDCQTD");
 	}
-	return quantItem;
+	return cdcQtd;
   }
 
-  private editFormatado getValorItem() {
-	if (valorItem == null) {
-	  valorItem = new editFormatado();
-	  valorItem.setTipoFormatacao(7);
-	  valorItem.setName("CDCVAL");
+  private editFormatado getCdcVal() {
+	if (cdcVal == null) {
+	  cdcVal = new editFormatado();
+	  cdcVal.setTipoFormatacao(7);
+	  cdcVal.setName("CDCVAL");
 	}
-	return valorItem;
+	return cdcVal;
   }
 
   private UnJLabel getLbDescGrupoItem() {
@@ -1501,54 +1501,54 @@ public class CadasControleDeViagem extends UnCadastroEmpresa {
 	return ipvObs;
   }
 
-  private UnJLabel getLbCodLancamento() {
-	if (lbCodLancamento == null) {
-	  lbCodLancamento = new UnJLabel();
-	  lbCodLancamento.setMinimumSize(new Dimension(110, 19));
-	  lbCodLancamento.setPreferredSize(new Dimension(110, 19));
-	  lbCodLancamento.setForeground(Color.BLUE);
-	  lbCodLancamento.setText("C\u00F3d. de Lan\u00E7amento:");
+  private UnJLabel getLbMveIde() {
+	if (lbMveIde == null) {
+	  lbMveIde = new UnJLabel();
+	  lbMveIde.setMinimumSize(new Dimension(110, 19));
+	  lbMveIde.setPreferredSize(new Dimension(110, 19));
+	  lbMveIde.setForeground(Color.BLUE);
+	  lbMveIde.setText("C\u00F3d. de Lan\u00E7amento:");
 	}
-	return lbCodLancamento;
+	return lbMveIde;
   }
 
-  private EditPratic getCodLan() {
-	if (codLan == null) {
-	  codLan = new EditPratic();
-	  codLan.setMaximumSize(new Dimension(40, 19));
-	  codLan.setMinimumSize(new Dimension(40, 19));
-	  codLan.setCampoEmpresa(super.getEmpCod());
-	  codLan.setHorizontalAlignment(JTextField.CENTER);
-	  codLan.setFont(new Font("Arial", Font.BOLD, 12));
-	  codLan.setCampoSegundaChave(getFilCod());
-	  codLan.setTipoValidacao("ES_VIEW_MOVIMENTACAO_VEICULO_2");
-	  codLan.setName("");
-	  codLan.setCampoLimpaTelaAutomatico(false);
+  private EditPratic getMveIde() {
+	if (mveIde == null) {
+	  mveIde = new EditPratic();
+	  mveIde.setMaximumSize(new Dimension(40, 19));
+	  mveIde.setMinimumSize(new Dimension(40, 19));
+	  mveIde.setCampoEmpresa(super.getEmpCod());
+	  mveIde.setHorizontalAlignment(JTextField.CENTER);
+	  mveIde.setFont(new Font("Arial", Font.BOLD, 12));
+	  mveIde.setCampoSegundaChave(getFilCod());
+	  mveIde.setTipoValidacao("MOVIMENTACAO_VEICULO");
+	  mveIde.setName("MVEIDE");
+	  mveIde.setCampoLimpaTelaAutomatico(false);
 	}
-	return codLan;
+	return mveIde;
   }
 
-  private UnJLabel getNjlblSequncia() {
-	if (njlblSequncia == null) {
-	  njlblSequncia = new UnJLabel();
-	  njlblSequncia.setHorizontalAlignment(SwingConstants.RIGHT);
-	  njlblSequncia.setText("Sequ\u00EAncia:");
+  private UnJLabel getLbCdcSeq() {
+	if (lbCdcSeq == null) {
+	  lbCdcSeq = new UnJLabel();
+	  lbCdcSeq.setHorizontalAlignment(SwingConstants.RIGHT);
+	  lbCdcSeq.setText("Sequ\u00EAncia:");
 	}
-	return njlblSequncia;
+	return lbCdcSeq;
   }
 
-  private UnJLabel getLabelSequencia() {
-	if (labelSequencia == null) {
-	  labelSequencia = new UnJLabel();
-	  labelSequencia.setMaximumSize(new Dimension(85, 19));
-	  labelSequencia.setMinimumSize(new Dimension(85, 19));
-	  labelSequencia.setPreferredSize(new Dimension(85, 19));
-	  labelSequencia.setBorder(new LineBorder(Color.GRAY));
-	  labelSequencia.setHorizontalAlignment(SwingConstants.CENTER);
-	  labelSequencia.setName("CDCSEQ");
-	  labelSequencia.setText("0000");
+  private UnJLabel getCdcSeq() {
+	if (cdcSeq == null) {
+	  cdcSeq = new UnJLabel();
+	  cdcSeq.setName("CDCSEQ");
+	  cdcSeq.setText("0000");
+	  cdcSeq.setMaximumSize(new Dimension(85, 19));
+	  cdcSeq.setMinimumSize(new Dimension(85, 19));
+	  cdcSeq.setPreferredSize(new Dimension(85, 19));
+	  cdcSeq.setBorder(new LineBorder(Color.GRAY));
+	  cdcSeq.setHorizontalAlignment(SwingConstants.CENTER);
 	}
-	return labelSequencia;
+	return cdcSeq;
   }
 
   @Override
