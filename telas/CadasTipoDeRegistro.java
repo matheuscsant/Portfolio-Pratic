@@ -31,7 +31,7 @@ public class CadasTipoDeRegistro extends UnCadastro {
   }
 
   private void initialize() {
-	setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_TIPO_REGISTRO");
+	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_TIPO_REGISTRO");
 	this.setTitle("Tipo de Registro");
 	this.setCodigoTela("4307");
 	this.setSize(new Dimension(537, 128));
@@ -41,7 +41,7 @@ public class CadasTipoDeRegistro extends UnCadastro {
 	this.setCampoFocoAberturaTela(getTreCod());
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasTipoDeRegistro = null;
+		DeskPratic.telasFinan.cadasTipoDeRegistro = null;
 	  }
 	});
   }

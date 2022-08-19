@@ -41,7 +41,7 @@ public class CadasTipoDeProdutoParaRegistro extends UnCadastro {
 	this.setCampoFocoAberturaTela(getTipCodProd());
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasTipoDeProdutoParaRegistro = null;
+		DeskPratic.telasFinan.cadasTipoDeProdutoParaRegistro = null;
 	  }
 	});
   }

@@ -38,7 +38,7 @@ public class CadasCategoriaDoProdutoParaRegistro extends UnCadastro {
   }
 
   private void initialize() {
-	setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CATEGORIA_REGISTRO");
+	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CATEGORIA_REGISTRO");
 	this.setTitle("Cadastro de Categoria do Produto para Registro");
 	this.setCodigoTela("4308");
 	this.setSize(new Dimension(712, 179));
@@ -48,7 +48,7 @@ public class CadasCategoriaDoProdutoParaRegistro extends UnCadastro {
 	this.setCampoFocoAberturaTela(getCreCod());
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasCategoriaDoProdutoParaRegistro = null;
+		DeskPratic.telasFinan.cadasCategoriaDoProdutoParaRegistro = null;
 	  }
 	});
   }
@@ -170,8 +170,8 @@ public class CadasCategoriaDoProdutoParaRegistro extends UnCadastro {
   private EditPratic getCreCod() {
 	if (creCod == null) {
 	  creCod = new EditPratic();
-	  creCod.setCampoResultSetAutomatico(false);
 	  creCod.setTipoValidacao("CATEGORIA_REGISTRO");
+	  creCod.setCampoResultSetAutomatico(false);
 	  creCod.setName("CRECOD");
 	}
 	return creCod;

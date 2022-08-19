@@ -21,7 +21,6 @@ import br.com.praticsistemas.pratic.util.objetos.EditPratic;
 import br.com.praticsistemas.unprtcomps.editFormatado;
 import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePratic;
-import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
 public class ValorContribuicaoParaCliente extends UnCadastro {
 
@@ -54,12 +53,12 @@ public class ValorContribuicaoParaCliente extends UnCadastro {
 	this.setFocoAutomaticoGravaTela(false);
 	this.setCampoTelaTrabalho(getCliCod());
 	this.setCampoFocoAberturaTela(getCliCod());
-	// this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRIBUICAO_CLIENTE");
+	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRIBUICAO_CLIENTE");
 	getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirValorContribuicaoParaCliente = null; // Evento para não bloquear
-																		// a tela
+		DeskPratic.telasFinan.valorContribuicaoParaCliente = null; // Evento para não bloquear
+																   // a tela
 		// de abrir
 	  }
 	});
@@ -170,13 +169,6 @@ public class ValorContribuicaoParaCliente extends UnCadastro {
   }
 
   public boolean gravaTela() {
-
-	getCliCod().setCampoObrigatorio(true);
-	getData().setCampoObrigatorio(true);
-
-	if (CompTelas.validaTelaAutomatico(panelCampos, false) == false) {
-	  return false;
-	} ;
 
 	try {
 

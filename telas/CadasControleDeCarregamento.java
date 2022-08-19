@@ -103,21 +103,21 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	limpaTela();
 	limparItens();
 	setCampoPreferredSizeEmpresa(new Dimension(108, 19));
-	setCampoTelaTrabalho(getMveIde());
-	setCampoFocoAberturaTela(getMveIde());
   }
 
   private void initialize() {
 	this.setMinimumSize(new Dimension(900, 690));
 	this.setPreferredSize(new Dimension(900, 690));
 	this.setSize(new Dimension(900, 623));
+	this.setCampoTelaTrabalho(getMveIde());
+	this.setCampoFocoAberturaTela(getMveIde());
 	this.setTitle("Cadastro de Controle de Viagem");
 	this.setCodigoTela("4305");
 	this.setFocoAutomaticoGravaTela(false);
 	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasControleDeCarregamento = null; // Evento para não bloquear a tela
+		DeskPratic.telasFinan.cadasControleDeCarregamento = null; // Evento para não bloquear a tela
 		// de abrir
 	  }
 	});

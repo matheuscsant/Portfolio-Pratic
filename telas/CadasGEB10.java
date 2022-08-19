@@ -55,7 +55,7 @@ public class CadasGEB10 extends UnCadastro {
 	this.setFocoAutomaticoGravaTela(false);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
-		DeskPratic.telasFinan.abrirCadasGEB10 = null;
+		DeskPratic.telasFinan.cadasGEB10 = null;
 	  }
 	});
   }
