@@ -160,10 +160,10 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  panelCampos.setMaximumSize(new Dimension(531, 225));
 	  panelCampos.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 	  GridBagLayout gbl_panelCampos = new GridBagLayout();
-	  gbl_panelCampos.columnWidths = new int[] { 106, 0, 0, 15, 22, 115, 0, 0, 0, 0, 22, 68, 0, 0 };
+	  gbl_panelCampos.columnWidths = new int[] { 106, 0, 0, 15, 22, 115, 0, 0, 0, 0, 22, 68, 0, 0, 0 };
 	  gbl_panelCampos.rowHeights = new int[] { 25, 0, 25, 25, 25, 25, 25, 25, 25, 0 };
 	  gbl_panelCampos.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-		  0.0, 1.0, 0.0, Double.MIN_VALUE };
+		  0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 	  gbl_panelCampos.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 		  Double.MIN_VALUE };
 	  panelCampos.setLayout(gbl_panelCampos);
@@ -344,8 +344,9 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  gbc_kmChegada.gridy = 6;
 	  panelCampos.add(getKmFina(), gbc_kmChegada);
 	  GridBagConstraints gbc_lbKmRodado = new GridBagConstraints();
-	  gbc_lbKmRodado.fill = GridBagConstraints.BOTH;
-	  gbc_lbKmRodado.gridwidth = 2;
+	  gbc_lbKmRodado.anchor = GridBagConstraints.WEST;
+	  gbc_lbKmRodado.fill = GridBagConstraints.VERTICAL;
+	  gbc_lbKmRodado.gridwidth = 4;
 	  gbc_lbKmRodado.insets = new Insets(2, 3, 0, 3);
 	  gbc_lbKmRodado.gridx = 8;
 	  gbc_lbKmRodado.gridy = 6;
@@ -386,7 +387,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  GridBagConstraints gbc_valTot = new GridBagConstraints();
 	  gbc_valTot.insets = new Insets(2, 3, 0, 3);
 	  gbc_valTot.fill = GridBagConstraints.BOTH;
-	  gbc_valTot.gridwidth = 3;
+	  gbc_valTot.gridwidth = 4;
 	  gbc_valTot.gridx = 10;
 	  gbc_valTot.gridy = 7;
 	  panelCampos.add(getValTot(), gbc_valTot);
@@ -397,7 +398,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  gbc_lbObservacoes.gridy = 8;
 	  panelCampos.add(getLbObservacoes(), gbc_lbObservacoes);
 	  GridBagConstraints gbc_observacoes = new GridBagConstraints();
-	  gbc_observacoes.gridwidth = 12;
+	  gbc_observacoes.gridwidth = 13;
 	  gbc_observacoes.insets = new Insets(2, 3, 0, 3);
 	  gbc_observacoes.fill = GridBagConstraints.HORIZONTAL;
 	  gbc_observacoes.gridx = 1;
@@ -647,6 +648,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 		getMveIde().setEnabled(true);
 		CompTelas.montaCamposResultSet(res, getPanelCampos(), false);
 		getMveIde().setText(TrataString.insereQuebraLinha(res.getString("mveide")));
+		getLbKmRoda().setText(TrataString.insereQuebraLinha(res.getString("kmroda") + " Km Rodados"));
 		setMensagemExclusao("Tem certeza que deseja excluir O PEDIDO DE SERVIÇO: \n ->> "
 			+ getMveIde().getText() + " ?");
 
@@ -1118,9 +1120,9 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private UnJLabel getLbKmRoda() {
 	if (lbKmRodado == null) {
 	  lbKmRodado = new UnJLabel();
-	  lbKmRodado.setPreferredSize(new Dimension(100, 19));
-	  lbKmRodado.setMinimumSize(new Dimension(100, 19));
-	  lbKmRodado.setMaximumSize(new Dimension(100, 19));
+	  lbKmRodado.setPreferredSize(new Dimension(170, 19));
+	  lbKmRodado.setMinimumSize(new Dimension(170, 19));
+	  lbKmRodado.setMaximumSize(new Dimension(170, 19));
 	  lbKmRodado.setFont(new Font("Arial", Font.BOLD, 11));
 	  lbKmRodado.setBackground(Color.LIGHT_GRAY);
 	  lbKmRodado.setText(" 0 KM rodados ");
