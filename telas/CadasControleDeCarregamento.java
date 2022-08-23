@@ -69,7 +69,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private UnEdit mveObs;
   private UnJLabel lbDescFilCod;
   private UnJLabel lbDescFunCod;
-  private UnJLabel lbCalcValorFrete;
+  private UnJLabel valTot;
   private UnJLabel lbDescVeiPla;
   private UnJLabel lbDescOriPre;
   private EditPratic oriPre;
@@ -383,13 +383,13 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  gbc_lbValorFrete.gridx = 8;
 	  gbc_lbValorFrete.gridy = 7;
 	  panelCampos.add(getLbValTot(), gbc_lbValorFrete);
-	  GridBagConstraints gbc_lbCalcValorFrete = new GridBagConstraints();
-	  gbc_lbCalcValorFrete.insets = new Insets(2, 3, 0, 3);
-	  gbc_lbCalcValorFrete.fill = GridBagConstraints.BOTH;
-	  gbc_lbCalcValorFrete.gridwidth = 3;
-	  gbc_lbCalcValorFrete.gridx = 10;
-	  gbc_lbCalcValorFrete.gridy = 7;
-	  panelCampos.add(getLbCalcValorFrete(), gbc_lbCalcValorFrete);
+	  GridBagConstraints gbc_valTot = new GridBagConstraints();
+	  gbc_valTot.insets = new Insets(2, 3, 0, 3);
+	  gbc_valTot.fill = GridBagConstraints.BOTH;
+	  gbc_valTot.gridwidth = 3;
+	  gbc_valTot.gridx = 10;
+	  gbc_valTot.gridy = 7;
+	  panelCampos.add(getValTot(), gbc_valTot);
 	  GridBagConstraints gbc_lbObservacoes = new GridBagConstraints();
 	  gbc_lbObservacoes.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbObservacoes.anchor = GridBagConstraints.WEST;
@@ -635,7 +635,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	try {
 
 	  String query = "select EMPCOD, FILCOD, FILFAN, MVEIDE, VEIPLA, VEIPLADES, FUNCOD, FUNNOM, FUNNOMORI, MVEDAT, MVEPES, KMINIC, KMFINA, "
-		  + "MVEOBS, KMRODA, ORIPRE, ORIPREDES, DESPRE, DESPREDES, MVEVAL, OBRCOD, OBRCODDES, MVEDTF "
+		  + "MVEOBS, KMRODA, ORIPRE, ORIPREDES, DESPRE, DESPREDES, MVEVAL, OBRCOD, OBRCODDES, MVEDTF, VALTOT "
 		  + "FROM ES_VIEW_MOVIMENTACAO_VEICULO_2 " + "where empcod = '" + getEmpCod().getText()
 		  + "' and filcod = " + getFilCod().getText() + " and mveide = " + codigo;
 	  res = getSelecao().executeQuery(query);
@@ -683,8 +683,8 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 
   private void montarValorFrete() {
 	double totalFrete = getMveVal().getValorDecimal() * getMvePes().getValorDecimal();
-	getLbCalcValorFrete().setText("R$ " + Numeros.formatarDecimalVariavel(totalFrete, 2));
-	getLbCalcValorFrete().setAuxiliarDeTrabalho(String.valueOf(totalFrete));
+	getValTot().setText("R$ " + Numeros.formatarDecimalVariavel(totalFrete, 2));
+	getValTot().setAuxiliarDeTrabalho(String.valueOf(totalFrete));
 
   }
 
@@ -1229,20 +1229,21 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	return lbDescFunCod;
   }
 
-  private UnJLabel getLbCalcValorFrete() {
-	if (lbCalcValorFrete == null) {
-	  lbCalcValorFrete = new UnJLabel();
-	  lbCalcValorFrete.setPreferredSize(new Dimension(100, 19));
-	  lbCalcValorFrete.setMinimumSize(new Dimension(100, 19));
-	  lbCalcValorFrete.setMaximumSize(new Dimension(100, 19));
-	  lbCalcValorFrete.setText(" R$ 0,00 ");
-	  lbCalcValorFrete.setOpaque(true);
-	  lbCalcValorFrete.setHorizontalAlignment(SwingConstants.CENTER);
-	  lbCalcValorFrete.setBackground(Color.LIGHT_GRAY);
-	  lbCalcValorFrete.setFont(new Font("Arial", Font.BOLD, 11));
+  private UnJLabel getValTot() {
+	if (valTot == null) {
+	  valTot = new UnJLabel();
+	  valTot.setName("valtot");
+	  valTot.setPreferredSize(new Dimension(100, 19));
+	  valTot.setMinimumSize(new Dimension(100, 19));
+	  valTot.setMaximumSize(new Dimension(100, 19));
+	  valTot.setText(" R$ 0,00 ");
+	  valTot.setOpaque(true);
+	  valTot.setHorizontalAlignment(SwingConstants.CENTER);
+	  valTot.setBackground(Color.LIGHT_GRAY);
+	  valTot.setFont(new Font("Arial", Font.BOLD, 11));
 
 	}
-	return lbCalcValorFrete;
+	return valTot;
   }
 
   private UnJLabel getLbDescVeiPla() {
