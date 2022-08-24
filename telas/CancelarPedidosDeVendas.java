@@ -71,7 +71,11 @@ public class CancelarPedidosDeVendas extends UnProcessos {
 	this.setCodigoTela("4310");
 	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.setCampoFocoAberturaTela(getEmpCod());
-	this.setSize(560, 492);
+	this.setGravaTamanhoTelaAutomatico(true);
+	this.setSize(new Dimension(560, 492));
+	this.setMinimumSize(new Dimension(560, 492));
+	this.setPreferredSize(new Dimension(560, 492));
+	this.setResizable(true);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
 		DeskPratic.telasFinan.cancelarPedidosDeVendas = null;
@@ -134,7 +138,8 @@ public class CancelarPedidosDeVendas extends UnProcessos {
 	  gbc_lbInicial.gridy = 0;
 	  panelCampos.add(getLbInicial(), gbc_lbInicial);
 	  GridBagConstraints gbc_lbFinal = new GridBagConstraints();
-	  gbc_lbFinal.fill = GridBagConstraints.BOTH;
+	  gbc_lbFinal.anchor = GridBagConstraints.WEST;
+	  gbc_lbFinal.fill = GridBagConstraints.VERTICAL;
 	  gbc_lbFinal.insets = new Insets(2, 3, 0, 3);
 	  gbc_lbFinal.gridx = 5;
 	  gbc_lbFinal.gridy = 0;
@@ -191,8 +196,8 @@ public class CancelarPedidosDeVendas extends UnProcessos {
 	  gbc_datI.gridy = 3;
 	  panelCampos.add(getDatI(), gbc_datI);
 	  GridBagConstraints gbc_datF = new GridBagConstraints();
+	  gbc_datF.anchor = GridBagConstraints.WEST;
 	  gbc_datF.insets = new Insets(2, 3, 0, 3);
-	  gbc_datF.fill = GridBagConstraints.HORIZONTAL;
 	  gbc_datF.gridx = 5;
 	  gbc_datF.gridy = 3;
 	  panelCampos.add(getDatF(), gbc_datF);
@@ -382,7 +387,7 @@ public class CancelarPedidosDeVendas extends UnProcessos {
   private UnJLabel getLbMot() {
 	if (lbMot == null) {
 	  lbMot = new UnJLabel();
-	  lbMot.setText("Motivo\u00A0do\u00A0cancelamento\u00A0em\u00A0Grupo\u00A0dos\u00A0pedidos:");
+	  lbMot.setText("Motivo\u00A0do\u00A0cancelamento\u00A0dos\u00A0pedidos:");
 	  lbMot.setPreferredSize(new Dimension(120, 20));
 	  lbMot.setMinimumSize(new Dimension(120, 20));
 	}
@@ -531,8 +536,6 @@ public class CancelarPedidosDeVendas extends UnProcessos {
 
   public Timestamp associarPedidosCanceladosAnterior() throws Exception {
 	Timestamp momentoAssociacao = null;
-
-	mostraMensagem("Cancelando os Pedidos...");
 
 	for (int i = 0; i < getTabelaRes().getTabela().getRowCount(); i++) {
 
