@@ -111,7 +111,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	this.setSize(new Dimension(900, 623));
 	this.setCampoTelaTrabalho(getMveIde());
 	this.setCampoFocoAberturaTela(getMveIde());
-	this.setTitle("Cadastro de Controle de Viagem");
+	this.setTitle("Cadastro de Controle de Carregamento");
 	this.setCodigoTela("4305");
 	this.setFocoAutomaticoGravaTela(false);
 	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
@@ -648,7 +648,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 		getMveIde().setEnabled(true);
 		CompTelas.montaCamposResultSet(res, getPanelCampos(), false);
 		getMveIde().setText(TrataString.insereQuebraLinha(res.getString("mveide")));
-		getLbKmRoda().setText(TrataString.insereQuebraLinha(res.getString("kmroda") + " Km Rodados"));
+		getLbKmRoda().setText(Numeros.formatarDecimal(res.getString("kmroda"), 2) + " Km Rodados");
 		setMensagemExclusao("Tem certeza que deseja excluir O PEDIDO DE SERVIÇO: \n ->> "
 			+ getMveIde().getText() + " ?");
 
