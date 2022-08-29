@@ -22,6 +22,7 @@ import br.com.praticsistemas.pratic.templates.UnCadastroEmpresa;
 import br.com.praticsistemas.pratic.util.objetos.EditPratic;
 import br.com.praticsistemas.unprtcomps.editFormatado;
 import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
+import br.com.praticsistemas.unprtcomps.telas.UnJTextArea;
 import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
@@ -124,7 +125,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel lbTotalLiquido;
   private UnJLabel lbPer;
   private UnJLabel totalLiquido;
-  private UnJLabel motCpf;
   private UnJLabel pedNff;
   private UnJLabel pedDnf;
   private JPanel panelCondicoesEspecificas;
@@ -135,14 +135,15 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel lbCroEst;
   private editFormatado croEst;
   private UnJLabel lbNfes;
-  private UnJLabel nfes;
   private UnJLabel lbCtes;
-  private UnJLabel ctes;
   private UnJLabel lbSesSen;
   private editFormatado sesSen;
   private UnJLabel lbObsGer;
   private EditPratic obsGer;
   private UnJLabel lbDescObsGer;
+  private editFormatado motCpf;
+  private UnJTextArea nfes;
+  private UnJTextArea ctes;
 
   public CadasContratoDeTransporte() {
 
@@ -151,9 +152,11 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   }
 
   private void initialize() {
+  	this.setCampoChaveTelaEstrangeiro(true);
 	this.setCampoTelaTrabalho(getCteCod());
 	this.setCampoFocoAberturaTela(getCteCod());
 	this.setTitle("Cadastro de Contrato de Transporte");
+	this.setResizable(true);
 	this.setCodigoTela("4311");
 	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRATO_RODOVIARIO");
 	this.setSize(new Dimension(1030, 650));
@@ -431,15 +434,16 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  gbc_motNom.gridy = 4;
 	  panelCamposSup.add(getMotNom(), gbc_motNom);
 	  GridBagConstraints gbc_lbMotCpf = new GridBagConstraints();
-	  gbc_lbMotCpf.fill = GridBagConstraints.BOTH;
+	  gbc_lbMotCpf.anchor = GridBagConstraints.EAST;
+	  gbc_lbMotCpf.fill = GridBagConstraints.VERTICAL;
 	  gbc_lbMotCpf.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbMotCpf.gridx = 12;
 	  gbc_lbMotCpf.gridy = 4;
 	  panelCamposSup.add(getLbMotCpf(), gbc_lbMotCpf);
 	  GridBagConstraints gbc_motCpf = new GridBagConstraints();
+	  gbc_motCpf.insets = new Insets(2, 3, 0, 3);
 	  gbc_motCpf.gridwidth = 2;
 	  gbc_motCpf.fill = GridBagConstraints.BOTH;
-	  gbc_motCpf.insets = new Insets(2, 3, 0, 3);
 	  gbc_motCpf.gridx = 13;
 	  gbc_motCpf.gridy = 4;
 	  panelCamposSup.add(getMotCpf(), gbc_motCpf);
@@ -1816,17 +1820,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	return totalLiquido;
   }
 
-  private UnJLabel getMotCpf() {
-	if (motCpf == null) {
-	  motCpf = new UnJLabel();
-	  motCpf.setToolTipText("");
-	  motCpf.setPreferredSize(new Dimension(150, 19));
-	  motCpf.setName("MOTCPF");
-	  motCpf.setMinimumSize(new Dimension(150, 19));
-	}
-	return motCpf;
-  }
-
   public boolean montaTela(String codigo) {
 
 	if (getEmpCod().isVazio() || getFilCod().isVazio() || getCteCod().isVazio()
@@ -1851,6 +1844,8 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 		CompTelas.montaCamposResultSet(res, getPanelServicoRealizado(), false);
 		CompTelas.montaCamposResultSet(res, getPanelCamposSup(), false);
 		CompTelas.montaCamposResultSet(res, getPanelCondicoesEspecificas(), false);
+		getNfes().setText(TrataString.insereQuebraLinha(res.getString("NFES")));
+		getCtes().setText(TrataString.insereQuebraLinha(res.getString("CTES")));
 		setMensagemExclusao("Tem certeza que deseja excluir O REGISTRO: \n ->> " + codigo + " ?");
 
 	  }
@@ -1936,7 +1931,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	getPedDnf().setText("");
 	getCliCodCnp().setText("");
 	getCliCodEnd().setText("");
-	getMotCpf().setText("");
 
 	return true;
   }
@@ -1946,8 +1940,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	CompTelas.limparCampos(getPanelCondicoesEspecificas(), false);
 	getRespPagamento().setText("");
 	getPrevisaoEntrega().setText("");
-	getNfes().setText("");
-	getCtes().setText("");
 
 	return true;
   }
@@ -1960,7 +1952,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  gbl_panelCondicoesEspecificas.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
 	  gbl_panelCondicoesEspecificas.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0,
 		  Double.MIN_VALUE };
-	  gbl_panelCondicoesEspecificas.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	  gbl_panelCondicoesEspecificas.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 1.0,
 		  Double.MIN_VALUE };
 	  panelCondicoesEspecificas.setLayout(gbl_panelCondicoesEspecificas);
 	  GridBagConstraints gbc_lbRespPagamento = new GridBagConstraints();
@@ -2030,9 +2022,10 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  gbc_lbNfes.gridy = 4;
 	  panelCondicoesEspecificas.add(getLbNfes(), gbc_lbNfes);
 	  GridBagConstraints gbc_nfes = new GridBagConstraints();
-	  gbc_nfes.gridwidth = 4;
+	  gbc_nfes.anchor = GridBagConstraints.WEST;
 	  gbc_nfes.insets = new Insets(2, 3, 0, 3);
-	  gbc_nfes.fill = GridBagConstraints.BOTH;
+	  gbc_nfes.gridwidth = 4;
+	  gbc_nfes.fill = GridBagConstraints.VERTICAL;
 	  gbc_nfes.gridx = 1;
 	  gbc_nfes.gridy = 4;
 	  panelCondicoesEspecificas.add(getNfes(), gbc_nfes);
@@ -2043,9 +2036,10 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  gbc_lbCtes.gridy = 5;
 	  panelCondicoesEspecificas.add(getLbCtes(), gbc_lbCtes);
 	  GridBagConstraints gbc_ctes = new GridBagConstraints();
+	  gbc_ctes.anchor = GridBagConstraints.WEST;
+	  gbc_ctes.insets = new Insets(2, 3, 2, 3);
 	  gbc_ctes.gridwidth = 4;
-	  gbc_ctes.fill = GridBagConstraints.BOTH;
-	  gbc_ctes.insets = new Insets(2, 3, 0, 3);
+	  gbc_ctes.fill = GridBagConstraints.VERTICAL;
 	  gbc_ctes.gridx = 1;
 	  gbc_ctes.gridy = 5;
 	  panelCondicoesEspecificas.add(getCtes(), gbc_ctes);
@@ -2119,6 +2113,8 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel getLbNfes() {
 	if (lbNfes == null) {
 	  lbNfes = new UnJLabel();
+	  lbNfes.setHorizontalAlignment(SwingConstants.LEFT);
+	  lbNfes.setVerticalAlignment(SwingConstants.TOP);
 	  lbNfes.setText("Notas Fiscais:");
 	  lbNfes.setPreferredSize(new Dimension(200, 19));
 	  lbNfes.setMinimumSize(new Dimension(200, 19));
@@ -2127,35 +2123,16 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	return lbNfes;
   }
 
-  private UnJLabel getNfes() {
-	if (nfes == null) {
-	  nfes = new UnJLabel();
-	  nfes.setPreferredSize(new Dimension(500, 19));
-	  nfes.setName("NFES");
-	  nfes.setMinimumSize(new Dimension(500, 19));
-	}
-	return nfes;
-  }
-
   private UnJLabel getLbCtes() {
 	if (lbCtes == null) {
 	  lbCtes = new UnJLabel();
+	  lbCtes.setVerticalAlignment(SwingConstants.TOP);
 	  lbCtes.setText("Conhecimentos Transportes:");
 	  lbCtes.setPreferredSize(new Dimension(200, 19));
 	  lbCtes.setMinimumSize(new Dimension(200, 19));
 	  lbCtes.setForeground(Color.BLACK);
 	}
 	return lbCtes;
-  }
-
-  private UnJLabel getCtes() {
-	if (ctes == null) {
-	  ctes = new UnJLabel();
-	  ctes.setPreferredSize(new Dimension(500, 19));
-	  ctes.setName("CTES");
-	  ctes.setMinimumSize(new Dimension(500, 19));
-	}
-	return ctes;
   }
 
   public boolean gravaTela() {
@@ -2308,5 +2285,39 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  lbDescObsGer.setName("OBSGERDES");
 	}
 	return lbDescObsGer;
+  }
+
+  private editFormatado getMotCpf() {
+	if (motCpf == null) {
+	  motCpf = new editFormatado();
+	  motCpf.setTipoFormatacao(6);
+	  motCpf.setCampoObrigatorio(false);
+	  motCpf.setName("MOTCPF");
+	}
+	return motCpf;
+  }
+
+  private UnJTextArea getNfes() {
+	if (nfes == null) {
+	  nfes = new UnJTextArea();
+	  nfes.setEditable(false);
+	  nfes.setBackground(Color.LIGHT_GRAY);
+	  nfes.setPreferredSize(new Dimension(470, 100));
+	  nfes.setName("NFES");
+	  nfes.setMinimumSize(new Dimension(470, 100));
+	}
+	return nfes;
+  }
+
+  private UnJTextArea getCtes() {
+	if (ctes == null) {
+	  ctes = new UnJTextArea();
+	  ctes.setEditable(false);
+	  ctes.setBackground(Color.LIGHT_GRAY);
+	  ctes.setName("CTES");
+	  ctes.setMinimumSize(new Dimension(470, 100));
+	  ctes.setPreferredSize(new Dimension(470, 100));
+	}
+	return ctes;
   }
 }
