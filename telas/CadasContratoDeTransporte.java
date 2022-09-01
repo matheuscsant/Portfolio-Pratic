@@ -27,6 +27,8 @@ import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.UnJTextArea;
 import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 
@@ -1731,6 +1733,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  else {
 		setAcaoTela("I");
 		limpaTela();
+		montaTelaContrato("");
 		return false;
 	  }
 
@@ -2079,7 +2082,13 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private EditPratic getObsGer() {
 	if (obsGer == null) {
 	  obsGer = new EditPratic();
-	  obsGer.setTipoValidacao("observacoes");
+	  obsGer.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent arg0) {
+		  getBtnAceitar().requestFocus();
+		}
+	  });
+	  obsGer.setTipoValidacao("fp_contrato_trabalho/financeiro");
 	  obsGer.setPreferredSize(new Dimension(50, 19));
 	  obsGer.setMinimumSize(new Dimension(50, 19));
 	  obsGer.setHorizontalAlignment(SwingConstants.CENTER);

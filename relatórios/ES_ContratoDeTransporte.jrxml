@@ -286,7 +286,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="ES_REL_CONTRATO_RODOVIARIO"/>
 	</field>
 	<detail>
-		<band height="575" splitType="Stretch">
+		<band height="724" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="79" width="550" height="20" forecolor="#6E6B6B" backcolor="#9C9595" uuid="8673ea6a-cfac-4bbe-a185-da8ea0719943"/>
 			</rectangle>
@@ -1866,7 +1866,7 @@
 				<text><![CDATA[CONDIÇÕES GERAIS DO CONTRATO DE TRANSPORTE RODOVIÁRIO DE BENS]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="543" width="549" height="32" uuid="9efff94c-5ed1-40b7-beea-4d285441e2df">
+				<reportElement x="0" y="543" width="549" height="180" uuid="9efff94c-5ed1-40b7-beea-4d285441e2df">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
@@ -1875,16 +1875,16 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" markup="html">
 					<font size="6"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{OBSGER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CONHTM}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="189" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="4" width="548" height="26" uuid="d21515f7-8abf-4e94-a237-b274a2c3be93">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>

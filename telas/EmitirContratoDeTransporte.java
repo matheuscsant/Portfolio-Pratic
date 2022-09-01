@@ -440,8 +440,8 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
 	  parameters = new HashMap();
 	  parameters.put("WEMP", getEmpCod().getText());
 	  parameters.put("WFIL", getFilCod().getValorShort());
-	  parameters.put("CTEI", getCteI().getValorInteger());
-	  parameters.put("CTEF", getCteF().getValorInteger());
+	  parameters.put("CTEI", getCteI().getValorLong());
+	  parameters.put("CTEF", getCteF().getValorLong());
 	  parameters.put("NUMI", getNumI().getValorInteger());
 	  parameters.put("NUMF", getNumF().getValorInteger());
 	  parameters.put("EMII", getEmiI().getValorDate());
@@ -449,7 +449,8 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
 	  parameters.put("WORD", getOrd().getValor());
 	  parameters.put("conexao", DeskPratic.getConexao_2());
 
-	  mostrarRelatorioGraficoEmail(getEmpCod().getText(), parameters, null, "ES_Rel_CTe.jasper");
+	  mostrarRelatorioGraficoEmail(getEmpCod().getText(), parameters, null,
+		  "ES_ContratoDeTransporte.jasper");
 
 	} catch (Exception ex) {
 	  getErro().setErro(ex);
