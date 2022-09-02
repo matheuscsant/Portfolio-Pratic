@@ -7,12 +7,16 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -27,8 +31,6 @@ import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.UnJTextArea;
 import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 
@@ -150,6 +152,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel desDom;
   private JPanel panelValoresServRealizado;
   private JPanel panelMercadoria;
+  private JScrollPane rolagemCorpo;
 
   public CadasContratoDeTransporte() {
 
@@ -159,6 +162,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 
   private void initialize() {
 	this.setCampoChaveTelaEstrangeiro(true);
+	this.getAutoscrolls();
 	this.setCampoTelaTrabalho(getCteCod());
 	this.setCampoFocoAberturaTela(getCteCod());
 	this.setTitle("Cadastro de Contrato de Transporte");
@@ -914,34 +918,34 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  gbc_lbSesSen.gridy = 4;
 	  panelValoresServRealizado.add(getLbSesSen(), gbc_lbSesSen);
 	  GridBagConstraints gbc_sesSen = new GridBagConstraints();
-	  gbc_sesSen.insets = new Insets(2, 3, 0, 0);
+	  gbc_sesSen.gridwidth = 3;
+	  gbc_sesSen.insets = new Insets(2, 3, 0, 3);
 	  gbc_sesSen.fill = GridBagConstraints.BOTH;
 	  gbc_sesSen.gridx = 1;
 	  gbc_sesSen.gridy = 4;
 	  panelValoresServRealizado.add(getSesSen(), gbc_sesSen);
-	  GridBagConstraints gbc_lbPer = new GridBagConstraints();
-	  gbc_lbPer.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbPer.fill = GridBagConstraints.BOTH;
-	  gbc_lbPer.gridx = 2;
-	  gbc_lbPer.gridy = 4;
-	  panelValoresServRealizado.add(getLbPer(), gbc_lbPer);
-	  GridBagConstraints gbc_valIns = new GridBagConstraints();
-	  gbc_valIns.insets = new Insets(2, 3, 0, 3);
-	  gbc_valIns.fill = GridBagConstraints.BOTH;
-	  gbc_valIns.gridx = 3;
-	  gbc_valIns.gridy = 4;
-	  panelValoresServRealizado.add(getValIns(), gbc_valIns);
 	  GridBagConstraints gbc_lbPerInsValIns = new GridBagConstraints();
 	  gbc_lbPerInsValIns.insets = new Insets(2, 3, 0, 0);
 	  gbc_lbPerInsValIns.fill = GridBagConstraints.BOTH;
 	  gbc_lbPerInsValIns.gridx = 0;
 	  gbc_lbPerInsValIns.gridy = 5;
 	  panelValoresServRealizado.add(getLbPerInsValIns(), gbc_lbPerInsValIns);
+	  GridBagConstraints gbc_valIns = new GridBagConstraints();
+	  gbc_valIns.insets = new Insets(2, 3, 0, 0);
+	  gbc_valIns.fill = GridBagConstraints.BOTH;
+	  gbc_valIns.gridx = 1;
+	  gbc_valIns.gridy = 5;
+	  panelValoresServRealizado.add(getValIns(), gbc_valIns);
+	  GridBagConstraints gbc_lbPer = new GridBagConstraints();
+	  gbc_lbPer.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbPer.fill = GridBagConstraints.BOTH;
+	  gbc_lbPer.gridx = 2;
+	  gbc_lbPer.gridy = 5;
+	  panelValoresServRealizado.add(getLbPer(), gbc_lbPer);
 	  GridBagConstraints gbc_perIns = new GridBagConstraints();
 	  gbc_perIns.insets = new Insets(2, 3, 0, 3);
 	  gbc_perIns.fill = GridBagConstraints.BOTH;
-	  gbc_perIns.gridwidth = 3;
-	  gbc_perIns.gridx = 1;
+	  gbc_perIns.gridx = 3;
 	  gbc_perIns.gridy = 5;
 	  panelValoresServRealizado.add(getPerIns(), gbc_perIns);
 	  GridBagConstraints gbc_lbCroImr = new GridBagConstraints();
@@ -1352,7 +1356,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private EditPratic getMotNom() {
 	if (motNom == null) {
 	  motNom = new EditPratic();
-	  motNom.setCampoObrigatorio(false);
 	  motNom.setName("MOTNOM");
 	}
 	return motNom;
@@ -1361,7 +1364,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel getLbMotCpf() {
 	if (lbMotCpf == null) {
 	  lbMotCpf = new UnJLabel();
-	  lbMotCpf.setText("CPF/CNPJ:");
+	  lbMotCpf.setText("CPF:");
 	  lbMotCpf.setPreferredSize(new Dimension(60, 19));
 	  lbMotCpf.setMinimumSize(new Dimension(60, 19));
 	}
@@ -1531,7 +1534,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  perIns = new editFormatado();
 	  perIns.setCampoObrigatorio(false);
 	  perIns.setTipoFormatacao(7);
-	  perIns.setName("PERINS");
+	  perIns.setName("VALINS");
 	  perIns.setText(" R$ 0,00 ");
 	}
 	return perIns;
@@ -1542,7 +1545,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  valIns = new editFormatado();
 	  valIns.setCampoObrigatorio(false);
 	  valIns.setTipoFormatacao(7);
-	  valIns.setName("VALINS");
+	  valIns.setName("PERINS");
 	}
 	return valIns;
   }
@@ -1781,11 +1784,15 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 		CompTelas.montaCamposResultSet(res, getPanelMercadoria(), false);
 
 		getPedNff().setText(res.getString("PEDNFF"));
-		getPedDnf().setText(res.getString("PEDDNF"));
-		getPedPtr().setText(res.getString("PEDPTR"));
+		getPedDnf().setText(TrataString.dataTela(res.getString("PEDDNF")));
+		getPedPtr().setText(TrataString.dataTela(res.getString("PEDPTR")));
 		getTomTipDes().setText(res.getString("TOMTIPDES"));
 		getNfes().setText(TrataString.insereQuebraLinha(res.getString("NFES")));
 		getCtes().setText(TrataString.insereQuebraLinha(res.getString("CTES")));
+		getRemeteCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("REMETE_CLICNP")));
+		getExpediCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("EXPEDI_CLICNP")));
+		getRecebeCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("RECEBE_CLICNP")));
+		getDestinCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("DESTIN_CLICNP")));
 
 	  }
 
@@ -2050,7 +2057,7 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private UnJLabel getLbSesSen() {
 	if (lbSesSen == null) {
 	  lbSesSen = new UnJLabel();
-	  lbSesSen.setText("SEST/SENAN:");
+	  lbSesSen.setText("SEST/SENAT:");
 	  lbSesSen.setPreferredSize(new Dimension(90, 19));
 	  lbSesSen.setMinimumSize(new Dimension(90, 19));
 	  lbSesSen.setForeground(Color.BLACK);
@@ -2110,7 +2117,6 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	if (motCpf == null) {
 	  motCpf = new editFormatado();
 	  motCpf.setTipoFormatacao(6);
-	  motCpf.setCampoObrigatorio(false);
 	  motCpf.setName("MOTCPF");
 	}
 	return motCpf;
@@ -2439,6 +2445,17 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  desDom.setHorizontalAlignment(SwingConstants.RIGHT);
 	}
 	return desDom;
+  }
+
+  public JScrollPane getRolagemCorpo() {
+	if (rolagemCorpo == null) {
+	  rolagemCorpo = new JScrollPane();
+	  rolagemCorpo.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+	  rolagemCorpo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	  rolagemCorpo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+	  rolagemCorpo.setViewportView(getPanelServicoRealizado());
+	}
+	return rolagemCorpo;
   }
 
 }
