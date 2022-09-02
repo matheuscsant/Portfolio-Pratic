@@ -1,28 +1,28 @@
 package br.com.praticsistemas.pratic.faturamento.relatorio;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.util.HashMap;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import br.com.praticsistemas.pratic.DeskPratic;
 import br.com.praticsistemas.pratic.templates.UnRelatorios;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
-import br.com.praticsistemas.unprtlib.telas.CompTelas;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.util.HashMap;
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.border.EtchedBorder;
-import javax.swing.SwingConstants;
-import java.awt.Dimension;
 import br.com.praticsistemas.pratic.util.objetos.EditPratic;
-import java.awt.Font;
 import br.com.praticsistemas.unprtcomps.editFormatado;
 import br.com.praticsistemas.unprtcomps.telas.UnJComboBox;
+import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
+import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
 public class EmitirContratoDeTransporte extends UnRelatorios {
 
@@ -58,6 +58,7 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private void initialize() {
 	this.setTitle("Relatório de Contrato de Transporte");
 	this.setCodigoTela("4312");
+	this.setCampoFocoAberturaTela(getFilCod());
 	this.setSize(new Dimension(511, 313));
 	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new InternalFrameAdapter() {
@@ -324,7 +325,6 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private EditPratic getCteI() {
 	if (cteI == null) {
 	  cteI = new EditPratic();
-	  cteI.setTextoPadraoFoco("1");
 	  cteI.setName2("Codigo Cte Inicial");
 	}
 	return cteI;
@@ -333,7 +333,6 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private EditPratic getCteF() {
 	if (cteF == null) {
 	  cteF = new EditPratic();
-	  cteF.setTextoPadraoFoco("9999999");
 	  cteF.setName2("Codigo Cte Final");
 	}
 	return cteF;
@@ -351,7 +350,6 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private EditPratic getNumI() {
 	if (numI == null) {
 	  numI = new EditPratic();
-	  numI.setTextoPadraoFoco("1");
 	  numI.setName2("Numero Cte Inicial");
 	}
 	return numI;
@@ -360,7 +358,6 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private EditPratic getNumF() {
 	if (numF == null) {
 	  numF = new EditPratic();
-	  numF.setTextoPadraoFoco("9999999");
 	  numF.setName2("Numero Cte Final");
 	}
 	return numF;
@@ -378,8 +375,8 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private editFormatado getEmiI() {
 	if (emiI == null) {
 	  emiI = new editFormatado();
-	  emiI.setJogaDataPrimeiroDia(true);
 	  emiI.setTipoFormatacao(4);
+	  emiI.setText("01011980");
 	  emiI.setName2("Data Emiss\u00E3o Inical");
 	}
 	return emiI;
@@ -388,8 +385,8 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
   private editFormatado getEmiF() {
 	if (emiF == null) {
 	  emiF = new editFormatado();
-	  emiF.setJogaDataUltimoDia(true);
 	  emiF.setTipoFormatacao(4);
+	  emiF.setText("31122099");
 	  emiF.setName2("Data Emiss\u00E3o Inical");
 	}
 	return emiF;
@@ -456,5 +453,16 @@ public class EmitirContratoDeTransporte extends UnRelatorios {
 	  getErro().setErro(ex);
 	  finalizaProcesso();
 	}
+  }
+
+  public void montarRelatorio(String empresa, String filial, String CteI, String CteF, String NumI,
+	  String NumF) {
+	getEmpCod().setText(empresa);
+	getFilCod().setText(filial);
+	getCteI().setText(CteI);
+	getCteF().setText(CteF);
+	getNumI().setText(NumI);
+	getNumF().setText(NumF);
+	getBtnAceitar().requestFocus();
   }
 }
