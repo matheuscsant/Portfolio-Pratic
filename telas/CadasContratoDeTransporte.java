@@ -1715,26 +1715,49 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 
 	try {
 
-	  String query = "select EMPCOD, FILCOD, CTECOD, CLICOD, CLICODDES, CLICODCNP, CLICODEND, VEIPLA, VEIRB1, VEIRB2, VEIRB3, MOTNOM, MOTCPF, VALOCA, CROREN, "
-		  + "CRODES, CROPED, SESSEN, PERINS, VALINS, CROIMR, TOTADT, CROOCR, CROODE, CROSEG, CROEST, OBSGER, OBSGERDES, OBSGERMSG, CROTMP, TOTAL_SALDO, "
-		  + "TOTAL_LIQUIDO from ES_VIEW_CONTRATO_RODOVIARIO where empcod = '" + getEmpCod().getText()
-		  + "' and filcod = " + getFilCod().getText() + " and ctecod = " + codigo;
+	  String query = "select EMPCOD, FILCOD, FILCODDES, PEDCOD, PEDCLI, REMETE, REMETE_CLIRAZ, REMETE_CLIFAN, "
+		  + "REMETE_CLICNP, REMETE_CLITE1, REMETE_CLIEST, REMETE_MUNNOM, REMETE_MUNEST, REMETE_CLIBAI, "
+		  + "REMETE_CLICEP, REMETE_CLIIES, REMETE_CLIEND, REMETE_CLINUM, REMETE_CLICPL, PEDDAT, "
+		  + "PEDFRE, PEDPEF, PEDFRE_PEDPEF, PEDNFF, PEDSER, TRACOD, TRACODDES, TRACODMOT, TRACODMOTDES, VENCOD, VENCODDES, "
+		  + "PEDSAI, DESDOM, TOTCAR, OUTROS_CLIEST, OUTROS_CLIEND, OUTROS_CLINUM, OUTROS_CLIBAI, OUTROS_CLIIES, OUTROS_CLITE1, "
+		  + "OUTROS_MUNNOM, OUTROS_MUNEST, OUTROS_CLIRAZ, OUTROS_CLIFAN, OUTROS_CLICPL, OUTROS_CLICEP, DESTIN, "
+		  + "DESTIN_CLICNP, DESTIN_CLIEST, DESTIN_CLIEND, DESTIN_CLINUM, DESTIN_CLIBAI, DESTIN_CLIIES, "
+		  + "DESTIN_CLITE1, DESTIN_MUNNOM, DESTIN_MUNEST, DESTIN_CLIRAZ, DESTIN_CLIFAN, DESTIN_CLICPL, DESTIN_CLICEP, "
+		  + "EXPEDI, EXPEDI_CLICNP, EXPEDI_CLIEST, EXPEDI_CLIEND, EXPEDI_CLINUM, EXPEDI_CLIBAI, "
+		  + "EXPEDI_CLIIES, EXPEDI_CLITE1, EXPEDI_MUNNOM, EXPEDI_MUNEST, EXPEDI_CLIRAZ, EXPEDI_CLIFAN, EXPEDI_CLICPL, "
+		  + "EXPEDI_CLICEP, RECEBE, RECEBE_CLICNP, RECEBE_CLIEST, RECEBE_CLIEND, RECEBE_CLINUM, "
+		  + "RECEBE_CLIBAI, RECEBE_CLIIES, RECEBE_CLITE1, RECEBE_MUNNOM, RECEBE_MUNEST, RECEBE_CLIRAZ, "
+		  + "RECEBE_CLIFAN, RECEBE_CLICPL, RECEBE_CLICEP, TOMTIP, PESO_TONELADA, TOMTIPDES, NFES, CTES, PEDDNF, PEDPTR "
+		  + "from ES_VIEW_PEDVEN_CTE where empcod = '" + getEmpCod().getText() + "' and filcod = "
+		  + getFilCod().getText() + " and pedcod = " + codigo;
 	  res = getSelecao().executeQuery(query);
 
 	  if (res.next()) {
 		setAcaoTela("A");
 		limpaTela();
-		CompTelas.montaCamposResultSet(res, getPanelValoresServRealizado(), false);
-		CompTelas.montaCamposResultSet(res, getPanelCamposSup(), false);
-		getObsGer().setText(res.getString("OBSGER"));
-		getCroEst().setText(res.getString("CROEST"));
+		CompTelas.montaCamposResultSet(res, getPanelDestinatario(), false);
+		CompTelas.montaCamposResultSet(res, getPanelExpedidor(), false);
+		CompTelas.montaCamposResultSet(res, getPanelRemetente(), false);
+		CompTelas.montaCamposResultSet(res, getPanelRecebedor(), false);
+		CompTelas.montaCamposResultSet(res, getPanelMercadoria(), false);
+
+		getPedNff().setText(res.getString("PEDNFF"));
+		getPedDnf().setText(TrataString.dataTela(res.getString("PEDDNF")));
+		getPedPtr().setText(TrataString.dataTela(res.getString("PEDPTR")));
+		getTomTipDes().setText(res.getString("TOMTIPDES"));
+		getNfes().setText(TrataString.insereQuebraLinha(res.getString("NFES")));
+		getCtes().setText(TrataString.insereQuebraLinha(res.getString("CTES")));
+		getRemeteCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("REMETE_CLICNP")));
+		getExpediCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("EXPEDI_CLICNP")));
+		getRecebeCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("RECEBE_CLICNP")));
+		getDestinCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("DESTIN_CLICNP")));
 
 		montaTelaContrato("");
+
 	  }
 	  else {
 		setAcaoTela("I");
 		limpaTela();
-		montaTelaContrato("");
 		return false;
 	  }
 
@@ -1757,40 +1780,18 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 
 	try {
 
-	  String query = "select EMPCOD, FILCOD, FILCODDES, PEDCOD, PEDCLI, REMETE, REMETE_CLIRAZ, REMETE_CLIFAN, "
-		  + "REMETE_CLICNP, REMETE_CLITE1, REMETE_CLIEST, REMETE_MUNNOM, REMETE_MUNEST, REMETE_CLIBAI, "
-		  + "REMETE_CLICEP, REMETE_CLIIES, REMETE_CLIEND, REMETE_CLINUM, REMETE_CLICPL, PEDDAT, "
-		  + "PEDFRE, PEDPEF, PEDFRE_PEDPEF, PEDNFF, PEDSER, TRACOD, TRACODDES, TRACODMOT, TRACODMOTDES, VENCOD, VENCODDES, "
-		  + "PEDSAI, DESDOM, TOTCAR, OUTROS_CLIEST, OUTROS_CLIEND, OUTROS_CLINUM, OUTROS_CLIBAI, OUTROS_CLIIES, OUTROS_CLITE1, "
-		  + "OUTROS_MUNNOM, OUTROS_MUNEST, OUTROS_CLIRAZ, OUTROS_CLIFAN, OUTROS_CLICPL, OUTROS_CLICEP, DESTIN, "
-		  + "DESTIN_CLICNP, DESTIN_CLIEST, DESTIN_CLIEND, DESTIN_CLINUM, DESTIN_CLIBAI, DESTIN_CLIIES, "
-		  + "DESTIN_CLITE1, DESTIN_MUNNOM, DESTIN_MUNEST, DESTIN_CLIRAZ, DESTIN_CLIFAN, DESTIN_CLICPL, DESTIN_CLICEP, "
-		  + "EXPEDI, EXPEDI_CLICNP, EXPEDI_CLIEST, EXPEDI_CLIEND, EXPEDI_CLINUM, EXPEDI_CLIBAI, "
-		  + "EXPEDI_CLIIES, EXPEDI_CLITE1, EXPEDI_MUNNOM, EXPEDI_MUNEST, EXPEDI_CLIRAZ, EXPEDI_CLIFAN, EXPEDI_CLICPL, "
-		  + "EXPEDI_CLICEP, RECEBE, RECEBE_CLICNP, RECEBE_CLIEST, RECEBE_CLIEND, RECEBE_CLINUM, "
-		  + "RECEBE_CLIBAI, RECEBE_CLIIES, RECEBE_CLITE1, RECEBE_MUNNOM, RECEBE_MUNEST, RECEBE_CLIRAZ, "
-		  + "RECEBE_CLIFAN, RECEBE_CLICPL, RECEBE_CLICEP, TOMTIP, PESO_TONELADA, TOMTIPDES, NFES, CTES, PEDDNF, PEDPTR "
-		  + "from ES_VIEW_PEDVEN_CTE where empcod = '" + getEmpCod().getText() + "' and filcod = "
-		  + getFilCod().getText() + " and pedcod = " + getCteCod().getText();
+	  String query = "select EMPCOD, FILCOD, CTECOD, CLICOD, CLICODDES, CLICODCNP, CLICODEND, VEIPLA, VEIRB1, VEIRB2, VEIRB3, MOTNOM, MOTCPF, VALOCA, CROREN, "
+		  + "CRODES, CROPED, SESSEN, PERINS, VALINS, CROIMR, TOTADT, CROOCR, CROODE, CROSEG, CROEST, OBSGER, OBSGERDES, OBSGERMSG, CROTMP, TOTAL_SALDO, "
+		  + "TOTAL_LIQUIDO from ES_VIEW_CONTRATO_RODOVIARIO where empcod = '" + getEmpCod().getText()
+		  + "' and filcod = " + getFilCod().getText() + " and ctecod = " + getCteCod().getText();
 	  res = getSelecao().executeQuery(query);
 
 	  if (res.next()) {
-		CompTelas.montaCamposResultSet(res, getPanelDestinatario(), false);
-		CompTelas.montaCamposResultSet(res, getPanelExpedidor(), false);
-		CompTelas.montaCamposResultSet(res, getPanelRemetente(), false);
-		CompTelas.montaCamposResultSet(res, getPanelRecebedor(), false);
-		CompTelas.montaCamposResultSet(res, getPanelMercadoria(), false);
 
-		getPedNff().setText(res.getString("PEDNFF"));
-		getPedDnf().setText(TrataString.dataTela(res.getString("PEDDNF")));
-		getPedPtr().setText(TrataString.dataTela(res.getString("PEDPTR")));
-		getTomTipDes().setText(res.getString("TOMTIPDES"));
-		getNfes().setText(TrataString.insereQuebraLinha(res.getString("NFES")));
-		getCtes().setText(TrataString.insereQuebraLinha(res.getString("CTES")));
-		getRemeteCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("REMETE_CLICNP")));
-		getExpediCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("EXPEDI_CLICNP")));
-		getRecebeCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("RECEBE_CLICNP")));
-		getDestinCliCnp().setText(TrataString.formatarCnpjCpf(res.getString("DESTIN_CLICNP")));
+		CompTelas.montaCamposResultSet(res, getPanelValoresServRealizado(), false);
+		CompTelas.montaCamposResultSet(res, getPanelCamposSup(), false);
+		getObsGer().setText(res.getString("OBSGER"));
+		getCroEst().setText(res.getString("CROEST"));
 
 	  }
 
