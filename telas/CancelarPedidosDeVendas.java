@@ -28,8 +28,6 @@ import br.com.praticsistemas.unprtcomps.telas.JButton.UnJButton;
 import br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePratic;
 import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CancelarPedidosDeVendas extends UnProcessos {
 

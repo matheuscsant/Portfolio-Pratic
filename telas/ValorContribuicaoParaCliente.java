@@ -54,7 +54,7 @@ public class ValorContribuicaoParaCliente extends UnCadastro {
 	this.setCampoTelaTrabalho(getCliCod());
 	this.setCampoFocoAberturaTela(getCliCod());
 	this.setCampoTelaTrabalhoSqlViewMontaTela("ES_VIEW_CONTRIBUICAO_CLIENTE");
-	getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
+	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
 	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 	  public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
 		DeskPratic.telasFinan.valorContribuicaoParaCliente = null; // Evento para não bloquear
@@ -62,7 +62,7 @@ public class ValorContribuicaoParaCliente extends UnCadastro {
 		// de abrir
 	  }
 	});
-	this.getContentPane().add(getPanelCentral(), BorderLayout.CENTER);
+
   }
 
   private JPanel getPanelCentral() {

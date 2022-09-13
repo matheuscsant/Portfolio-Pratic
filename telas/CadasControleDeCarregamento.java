@@ -832,11 +832,11 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private UnJTablePratic getTabelaRes() {
 	if (tabelaRes == null) {
 	  tabelaRes = new UnJTablePratic();
-	  tabelaRes.setCampoTitulosTabela("Seq, Data, Departamento, Grupo, Subgrupo, Quantidade, Valor");
+	  tabelaRes.setCampoTitulosTabela("Seq, Data, Obra, Departamento, Grupo, Subgrupo, Quantidade, Valor");
 	  tabelaRes.setCampoDadosTabelaView("ES_VIEW_MOVIMENTACAO_VEICULO_CA");
 	  tabelaRes.setCampoDadosTabela(
-		  "CDCSEQ, CDCDAT, DEPCOD || ' - ' || DEPCODDES as DEPCOD, GRUCOD || ' - ' ||  GRUCODDES as GRUCOD, SUBCOD || ' - ' || SUBCODDES as SUBCOD, CDCQTD, CDCVAL ");
-	  tabelaRes.setCampoTitulosTabelaTamanhos("40, 90, 200, 200, 200, 120, 120");
+		  "CDCSEQ, CDCDAT, OBRCOD || ' - ' || OBRCODDES as OBRCOD,DEPCOD || ' - ' || DEPCODDES as DEPCOD, GRUCOD || ' - ' ||  GRUCODDES as GRUCOD, SUBCOD || ' - ' || SUBCODDES as SUBCOD, CDCQTD, CDCVAL ");
+	  tabelaRes.setCampoTitulosTabelaTamanhos("40, 90, 200, 200, 200, 200, 120, 120");
 	  tabelaRes.getTabela().setColunasCentralizadas("1");
 	  tabelaRes.setCampoDadosTabelaOrderBy("CDCSEQ");
 	  tabelaRes.setConexao(DeskPratic.getConexao());
@@ -1343,6 +1343,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private EditPratic getDepCod() {
 	if (depCod == null) {
 	  depCod = new EditPratic();
+	  depCod.setCampoObrigatorio(false);
 	  depCod.setTipoValidacao("DEPARTAMENTOS");
 	  depCod.setCampoEmpresa(empCod);
 	  depCod.setLabelDescricao(getLbDescDepto());
@@ -1378,6 +1379,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private EditPratic getGruCod() {
 	if (gruCod == null) {
 	  gruCod = new EditPratic();
+	  gruCod.setCampoObrigatorio(false);
 	  gruCod.setTipoValidacao("grupos_despesas");
 	  gruCod.setCampoEmpresa(empCod);
 	  gruCod.setLabelDescricao(getLbDescGrupoItem());
@@ -1389,6 +1391,7 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private EditPratic getSubCod() {
 	if (subCod == null) {
 	  subCod = new EditPratic();
+	  subCod.setCampoObrigatorio(false);
 	  subCod.setTipoValidacao("ES_SUB_GRUPO_DEPESAS/GRUPOS_DEPESAS");
 	  subCod.setCampoEmpresa(empCod);
 	  subCod.setLabelDescricao(getLbDescSubGrupoItem());

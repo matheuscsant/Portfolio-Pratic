@@ -28,6 +28,7 @@ import br.com.praticsistemas.unprtcomps.editFormatado;
 import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.UnJTextArea;
 import br.com.praticsistemas.unprtlib.TrataString;
+import br.com.praticsistemas.unprtlib.numeros.Numeros;
 import br.com.praticsistemas.unprtlib.telas.CompTelas;
 
 public class CadasContratoDeTransporte extends UnCadastroEmpresa {
@@ -1457,6 +1458,14 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
   private editFormatado getValOca() {
 	if (valOca == null) {
 	  valOca = new editFormatado();
+	  valOca.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent arg0) {
+		  if (getCroRen().getText().equalsIgnoreCase("0,00")) {
+			montarValorPesoValOca();
+		  }
+		}
+	  });
 	  valOca.setCampoObrigatorio(false);
 	  valOca.setTipoFormatacao(7);
 	  valOca.setName("VALOCA");
@@ -1472,6 +1481,13 @@ public class CadasContratoDeTransporte extends UnCadastroEmpresa {
 	  croRen.setName("CROREN");
 	}
 	return croRen;
+  }
+
+  private void montarValorPesoValOca() {
+	double total = getPesoTonelada().getValorDecimal() * getValOca().getValorDecimal();
+	getCroRen().setText(Numeros.formatarDecimalVariavel(total, 2));
+	getCroRen().setAuxiliarDeTrabalho(String.valueOf(total));
+
   }
 
   private UnJLabel getLbCroDes() {
