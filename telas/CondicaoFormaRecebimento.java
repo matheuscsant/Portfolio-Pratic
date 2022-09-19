@@ -279,15 +279,6 @@ public class CondicaoFormaRecebimento extends UnCadastro {
 	  cliCod.setTipoValidacao("cli_geral");
 	  cliCod.setSoNumeros(true);
 	  cliCod.setLabelDescricao(getCliCodDes());
-	  cliCod.addFocusListener(new FocusAdapter() {
-		@Override
-		public void focusLost(FocusEvent e) {
-		  if (cliCod.isVazio()) {
-			getCliCod().limpar();
-			montaTela("");
-		  }
-		}
-	  });
 	}
 	return cliCod;
   }
