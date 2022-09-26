@@ -832,7 +832,8 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
   private UnJTablePratic getTabelaRes() {
 	if (tabelaRes == null) {
 	  tabelaRes = new UnJTablePratic();
-	  tabelaRes.setCampoTitulosTabela("Seq, Data, Obra, Departamento, Grupo, Subgrupo, Quantidade, Valor");
+	  tabelaRes
+		  .setCampoTitulosTabela("Seq, Data, Obra, Departamento, Grupo, Subgrupo, Quantidade, Valor");
 	  tabelaRes.setCampoDadosTabelaView("ES_VIEW_MOVIMENTACAO_VEICULO_CA");
 	  tabelaRes.setCampoDadosTabela(
 		  "CDCSEQ, CDCDAT, OBRCOD || ' - ' || OBRCODDES as OBRCOD,DEPCOD || ' - ' || DEPCODDES as DEPCOD, GRUCOD || ' - ' ||  GRUCODDES as GRUCOD, SUBCOD || ' - ' || SUBCODDES as SUBCOD, CDCQTD, CDCVAL ");
@@ -892,7 +893,6 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  lbDescFilCod.setFont(new Font("Arial", Font.BOLD, 11));
 	  lbDescFilCod.setText("lbFilCod");
 	  lbDescFilCod.limpar();
-
 	}
 	return lbDescFilCod;
   }
@@ -1503,6 +1503,8 @@ public class CadasControleDeCarregamento extends UnCadastroEmpresa {
 	  ipvObs.setMinimumSize(new Dimension(60, 20));
 	  ipvObs.setMaximumSize(new Dimension(60, 20));
 	  ipvObs.setMaximoLength("900");
+	  ipvObs.setDesk(DeskPratic.desktop);
+	  ipvObs.setName2("Texto");
 	}
 	return ipvObs;
   }
