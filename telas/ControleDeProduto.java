@@ -10,10 +10,12 @@ import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.praticsistemas.pratic.DeskPratic;
@@ -24,6 +26,7 @@ import br.com.praticsistemas.unprtcomps.telas.UnEdit;
 import br.com.praticsistemas.unprtcomps.telas.UnJLabel;
 import br.com.praticsistemas.unprtcomps.telas.UnJTextoLivre;
 import br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePratic;
+import br.com.praticsistemas.unprtlib.TrataString;
 import br.com.praticsistemas.unprtlib.numeros.Numeros;
 
 public class ControleDeProduto extends UnCadastroEmpresa {
@@ -92,21 +95,26 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private UnJLabel lbDesProSec;
   private UnJLabel lbSecado;
   private UnJLabel secado;
+  private UnJLabel lbMovIde;
+  private UnJLabel movIde;
 
   public ControleDeProduto() {
 
 	initialize();
+	montaTela("");
 
   }
 
   private void initialize() {
+	this.getBtnExcluir().setEnabled(false);;
+	this.getBtnNovo().setEnabled(false);
 	this.setResizable(true);
 	this.setCampoChaveTelaEstrangeiro(true);
 	this.setCampoTelaTrabalho(getProCod());
 	this.setCampoFocoAberturaTela(getProCod());
 	this.setPreferredSize(new Dimension(864, 652));
 	this.setMinimumSize(new Dimension(864, 652));
-	this.setSize(new Dimension(949, 652));
+	this.setSize(new Dimension(958, 652));
 	this.setTitle("Controle de Produto");
 	this.setCodigoTela("4315");
 	this.setFocoAutomaticoGravaTela(false);
@@ -411,9 +419,8 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  gbc_perUmi.gridy = 9;
 	  panelCampos.add(getPerUmi(), gbc_perUmi);
 	  GridBagConstraints gbc_lbProSec = new GridBagConstraints();
-	  gbc_lbProSec.anchor = GridBagConstraints.EAST;
 	  gbc_lbProSec.insets = new Insets(2, 3, 0, 0);
-	  gbc_lbProSec.fill = GridBagConstraints.VERTICAL;
+	  gbc_lbProSec.fill = GridBagConstraints.BOTH;
 	  gbc_lbProSec.gridx = 0;
 	  gbc_lbProSec.gridy = 10;
 	  panelCampos.add(getLbProSec(), gbc_lbProSec);
@@ -583,6 +590,20 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  gbc_conObs.gridx = 1;
 	  gbc_conObs.gridy = 16;
 	  panelCampos.add(getConObs(), gbc_conObs);
+	  GridBagConstraints gbc_lbMovIde = new GridBagConstraints();
+	  gbc_lbMovIde.insets = new Insets(2, 3, 0, 0);
+	  gbc_lbMovIde.fill = GridBagConstraints.BOTH;
+	  gbc_lbMovIde.gridx = 8;
+	  gbc_lbMovIde.gridy = 16;
+	  panelCampos.add(getLbMovIde(), gbc_lbMovIde);
+	  GridBagConstraints gbc_movIde = new GridBagConstraints();
+	  gbc_movIde.anchor = GridBagConstraints.WEST;
+	  gbc_movIde.fill = GridBagConstraints.VERTICAL;
+	  gbc_movIde.gridwidth = 2;
+	  gbc_movIde.insets = new Insets(2, 3, 0, 0);
+	  gbc_movIde.gridx = 9;
+	  gbc_movIde.gridy = 16;
+	  panelCampos.add(getMovIde(), gbc_movIde);
 	}
 	return panelCampos;
   }
@@ -599,6 +620,12 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private EditPratic getProCod() {
 	if (proCod == null) {
 	  proCod = new EditPratic();
+	  proCod.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent e) {
+		  montaTela("");
+		}
+	  });
 	  proCod.setTipoValidacao("produtos");
 	  proCod.setName("PROCOD");
 	  proCod.setCampoLimpaTelaAutomatico(false);
@@ -628,13 +655,18 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private editFormatado getConDat() {
 	if (conDat == null) {
 	  conDat = new editFormatado();
+	  conDat.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent arg0) {
+		  montaTela("");
+		}
+	  });
 	  conDat.setTipoFormatacao(4);
 	  conDat.setText("");
 	  conDat.setPreferredSize(new Dimension(40, 19));
 	  conDat.setName("CONDAT");
 	  conDat.setMinimumSize(new Dimension(40, 19));
 	  conDat.setCampoResultSetAutomatico(false);
-	  conDat.setCampoObrigatorio(false);
 	}
 	return conDat;
   }
@@ -669,10 +701,11 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private UnEdit getMotNom() {
 	if (motNom == null) {
 	  motNom = new UnEdit();
+	  motNom.setCampoObrigatorio(false);
 	  motNom.setCampoResultSetAutomatico(false);
 	  motNom.setText("");
 	  motNom.setName2("Descri\u00E7\u00E3o C\u00F3digo");
-	  motNom.setName("MTONOM");
+	  motNom.setName("NOMMOT");
 	}
 	return motNom;
   }
@@ -715,7 +748,6 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  pesEnt.setTipoFormatacao(7);
 	  pesEnt.setName("PESENT");
 	  pesEnt.setCampoResultSetAutomatico(false);
-	  pesEnt.setCampoObrigatorio(false);
 	}
 	return pesEnt;
   }
@@ -741,7 +773,6 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  pesSai.setTipoFormatacao(7);
 	  pesSai.setName("PESSAI");
 	  pesSai.setCampoResultSetAutomatico(false);
-	  pesSai.setCampoObrigatorio(false);
 	}
 	return pesSai;
   }
@@ -757,6 +788,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  });
 	  cliCod.setCampoResultSetAutomatico(false);
 	  cliCod.setTipoValidacao("cli_geral");
+	  cliCod.setName("CLICOD");
 	  cliCod.setSoNumeros(true);
 	  cliCod.setPreferredSize(new Dimension(60, 19));
 	  cliCod.setName2("C\u00F3digo do Cliente");
@@ -769,6 +801,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private EditPratic getMsiAfi() {
 	if (msiAfi == null) {
 	  msiAfi = new EditPratic();
+	  msiAfi.setCampoObrigatorio(false);
 	  msiAfi.setEnabled(false);
 	  msiAfi.setCampoResultSetAutomatico(false);
 	  msiAfi.setTipoValidacao("municipios");
@@ -817,7 +850,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 
   private void montaPesoLiquido() {
 	double total = getPesSai().getValorDecimal() - getPesEnt().getValorDecimal();
-	getPesLiq().setText(Numeros.formatarDecimalVariavel(total, 2) + " Kg");
+	getPesLiq().setText(Numeros.formatarDecimalVariavel(total, 2));
 	getPesLiq().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
@@ -846,26 +879,40 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 		@Override
 		public void focusLost(FocusEvent arg0) {
 		  montaValorSecador();
+		  obrigatorioProSec();
 		}
 	  });
 	  perUmi.setTipoFormatacao(7);
 	  perUmi.setName("PERUMI");
 	  perUmi.setCampoResultSetAutomatico(false);
-	  perUmi.setCampoObrigatorio(false);
 	}
 	return perUmi;
   }
 
+  private void obrigatorioProSec() {
+	if (getPerUmi().isVazio()) {
+	  getProSec().setCampoObrigatorio(true);
+	}
+	else {
+	  getProSec().setCampoObrigatorio(false);
+	}
+  }
+
   private void montaValorSecador() {
-	double total = getQtdSac().getValorDecimal() * getPerUmi().getValorDecimal();
-	getSecado().setText("R$ " + Numeros.formatarDecimalVariavel(total, 2));
+	double total = getQtdSac().getValorDecimal() * (Numeros.formatarDecimalBanco(DeskPratic.fctGeral
+		.selectStringBanco("select secval FROM ES_VIEW_TABELA_SECAGEM_ITENS WHERE empcod = '"
+			+ getEmpCod().getText() + "' and filcod = " + getFilCod().getText() + " and secdat = '"
+			+ getConDat().getValorDate() + "' and " + getPerUmi().getValorDecimal() + " >= perini and "
+			+ getPerUmi().getValorDecimal() + " <= perfim "))
+		/ 100);
+	getSecado().setText(Numeros.formatarDecimal(total, 2));
 	getSecado().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
   private UnJLabel getLbProSec() {
 	if (lbProSec == null) {
 	  lbProSec = new UnJLabel();
-	  lbProSec.setText("C\u00F3digo do Produto de Servi\u00E7o:");
+	  lbProSec.setText("C\u00F3digo de Servi\u00E7o:");
 	  lbProSec.setForeground(Color.BLUE);
 	}
 	return lbProSec;
@@ -874,10 +921,12 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private EditPratic getProSec() {
 	if (proSec == null) {
 	  proSec = new EditPratic();
+	  proSec.setCampoObrigatorio(false);
 	  proSec.setCampoResultSetAutomatico(false);
-	  proSec.setTipoValidacao("produtos");
+	  proSec.setTipoValidacao("produtos/tabela_secagem_itens");
+	  proSec.setCampoQuartaChave(getPerUmi());
+	  proSec.setCampoQuintaChave(getConDat());
 	  proSec.setName("PROSEC");
-	  proSec.setCampoLimpaTelaAutomatico(false);
 	  proSec.setLabelDescricao(getLbDesProSec());
 	}
 	return proSec;
@@ -931,7 +980,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 
   private void montaValorTotal() {
 	double total = getValFre().getValorDecimal() + getValArm().getValorDecimal();
-	getValTot().setText("R$ " + Numeros.formatarDecimalVariavel(total, 2));
+	getValTot().setText(Numeros.formatarDecimalVariavel(total, 2));
 	getValTot().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
@@ -992,6 +1041,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private UnEdit getIndAfla() {
 	if (indAfla == null) {
 	  indAfla = new UnEdit();
+	  indAfla.setCampoObrigatorio(false);
 	  indAfla.setCampoResultSetAutomatico(false);
 	  indAfla.setText("");
 	  indAfla.setPreferredSize(new Dimension(60, 19));
@@ -1029,20 +1079,36 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   }
 
   private void montaQuantidadePerda() {
-	double total = getQtdSac().getValorDecimal() * getPerQue().getValorDecimal();
-	getQtdPer().setText(Numeros.formatarDecimalVariavel(total, 2));
+	double total = (getQtdSac().getValorDecimal() * getPerQue().getValorDecimal()) / 100;
+	getQtdPer().setText(Numeros.formatarDecimal(total, 2));
 	getQtdPer().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
   private editFormatado getQtdSac() {
 	if (qtdSac == null) {
 	  qtdSac = new editFormatado();
+	  qtdSac.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusGained(FocusEvent e) {
+		  montaQuantidadeSacas();
+		}
+	  });
 	  qtdSac.setTipoFormatacao(7);
 	  qtdSac.setName("QTDSAC");
 	  qtdSac.setCampoResultSetAutomatico(false);
-	  qtdSac.setCampoObrigatorio(false);
 	}
 	return qtdSac;
+  }
+
+  private void montaQuantidadeSacas() {
+	double total = (getPesSai().getValorDecimal() - getPesEnt().getValorDecimal()) / (Numeros
+		.formatarDecimalBanco(DeskPratic.fctGeral.selectStringBanco(
+			"select propel FROM ES_VIEW_PRODUTOS WHERE empcod = '" + getEmpCod().getText()
+				+ "' and filcod = " + getFilCod().getText() + " and procod = " + getProCod().getText()))
+		/ 10000);
+
+	getQtdSac().setText(Numeros.formatarDecimal(total, 2));
+	getQtdSac().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
   private UnJLabel getLbQtdPer() {
@@ -1072,8 +1138,8 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   }
 
   private void montaQuantidadeSacaFinal() {
-	double total = getQtdSac().getValorDecimal() * getQtdPer().getValorDecimal();
-	getTotSac().setText(Numeros.formatarDecimalVariavel(total, 0));
+	double total = getQtdSac().getValorDecimal() - getQtdPer().getValorDecimal();
+	getTotSac().setText(Numeros.formatarDecimal(total, 2));
 	getTotSac().setAuxiliarDeTrabalho(String.valueOf(total));
   }
 
@@ -1133,6 +1199,13 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private EditPratic getFoment() {
 	if (foment == null) {
 	  foment = new EditPratic();
+	  foment.addFocusListener(new FocusAdapter() {
+		@Override
+		public void focusLost(FocusEvent e) {
+		  getConObs().requestFocus();
+		}
+	  });
+	  foment.setCampoObrigatorio(false);
 	  foment.setCampoResultSetAutomatico(false);
 	  foment.setName("FOMENT");
 	  foment.setMaxLength(60);
@@ -1168,17 +1241,18 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private UnJTablePratic getTabelaRes() {
 	if (tabelaRes == null) {
 	  tabelaRes = new UnJTablePratic();
-	  tabelaRes
-		  .setCampoTitulosTabela("Data, Número de Ticket, Código Fornecedor, Fornecedor, Motorista, "
-			  + "Placa, % Umidade, Peso Entrada, Peso Saída, Liquido (Kg), Sacas, "
+	  tabelaRes.setCampoTitulosTabela(
+		  "Seq, Data, Código Produto, Número de Ticket, Código Fornecedor, Fornecedor, Motorista, "
+			  + "Placa, % Umidade, Código do Serviço, Descrição do Serviço, Peso Entrada, Peso Saída, Liquido (Kg), Sacas, Valor Secador, "
 			  + "Frete Cliente, R$ Armazem, Total, Renda, Indice Afla, Quebra, "
 			  + "Perda, Total de Sacas Final, Local Descarga, Fomento");
 	  tabelaRes.setCampoDadosTabelaView("ES_VIEW_CONTROLE_PRODUTOS");
-	  tabelaRes.setCampoDadosTabela("CONDAT, NUMTIC, CLICOD, CLICODDES, NOMMOT, PLAFRO, PERUMI, PESENT, "
-		  + "PESSAI, PESLIQ, QTDSAC, VALFRE, VALARM, VALTOT, PERREN, INDAFL, PERQUE, "
-		  + "QTDPER, TOTSAC, LOCDES, FOMENT");
+	  tabelaRes.setCampoDadosTabela(
+		  "MOVIDE, CONDAT, PROCOD || ' - ' || PROCODDES as PROCOD, NUMTIC, CLICOD, CLICODDES, NOMMOT, PLAFRO, PERUMI, PROSEC, PROSECDES, PESENT, "
+			  + "PESSAI, PESLIQ, QTDSAC, VALFRE, SECADO, VALARM, VALTOT, PERREN, INDAFL, PERQUE, "
+			  + "QTDPER, TOTSAC, LOCDES, FOMENT");
 	  tabelaRes.setCampoTitulosTabelaTamanhos(
-		  "50, 100, 50, 200, 200, 100, 100, 50, 100, 100, 100, 50, 50, 50, 50, 50, 50, 50, "
+		  "50, 70, 130, 100, 50, 200, 200, 100, 100, 50, 130, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, "
 			  + "100, 200, 200");
 	  tabelaRes.setConexao(DeskPratic.getConexao());
 	  tabelaRes.setCampoFocoAlterarItens(getProCod());
@@ -1189,7 +1263,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 		  new br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePraticListener() {
 			public void acaoExcluirItemTabela(
 				br.com.praticsistemas.unprtcomps.telas.jtable.UnJTablePraticEvent e) {
-			  // gravaTelaItens("E");
+			  gravaTela();
 			}
 		  });
 	}
@@ -1208,8 +1282,8 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private EditPratic getNumTic() {
 	if (numTic == null) {
 	  numTic = new EditPratic();
+	  numTic.setSoNumerosLetras(true);
 	  numTic.setCampoResultSetAutomatico(false);
-	  numTic.setSoNumeros(true);
 	  numTic.setPreferredSize(new Dimension(60, 19));
 	  numTic.setName("NUMTIC");
 	  numTic.setMinimumSize(new Dimension(60, 19));
@@ -1249,6 +1323,7 @@ public class ControleDeProduto extends UnCadastroEmpresa {
   private UnEdit getCliNom() {
 	if (cliNom == null) {
 	  cliNom = new UnEdit();
+	  cliNom.setCampoObrigatorio(false);
 	  cliNom.setEnabled(false);
 	  cliNom.setText("");
 	  cliNom.setName2("Descri\u00E7\u00E3o C\u00F3digo");
@@ -1291,5 +1366,137 @@ public class ControleDeProduto extends UnCadastroEmpresa {
 	  secado.setBackground(Color.LIGHT_GRAY);
 	}
 	return secado;
+  }
+
+  public boolean limpaTela() {
+
+	getProCodDes().limpar();
+	getMovIde().limpar();
+	getPesLiq().limpar();
+	getSecado().limpar();
+	getValTot().limpar();
+	getTotSac().limpar();
+
+	return super.limpaTela();
+  }
+
+  public boolean montaTela(String codigo) {
+
+	getTabelaRes().setCampoDadosTabelaWhere(
+		" empcod = '" + getEmpCod().getText() + "' and filcod = " + DeskPratic.getPadraoFilial()
+			+ (getProCod().isVazio() ? "" : " and procod = " + getProCod().getText())
+			+ (getConDat().isVazio() ? ""
+				: " and condat = '" + TrataString.dataBanco(getConDat().getText()) + "'"));
+
+	getTabelaRes().montaTela("");
+
+	return true;
+
+  }
+
+  private UnJLabel getLbMovIde() {
+	if (lbMovIde == null) {
+	  lbMovIde = new UnJLabel();
+	  lbMovIde.setText("Sequ\u00EAncia:");
+	  lbMovIde.setHorizontalAlignment(SwingConstants.RIGHT);
+	}
+	return lbMovIde;
+  }
+
+  private UnJLabel getMovIde() {
+	if (movIde == null) {
+	  movIde = new UnJLabel();
+	  movIde.setText("0000");
+	  movIde.setPreferredSize(new Dimension(85, 19));
+	  movIde.setName("MOVIDE");
+	  movIde.setMinimumSize(new Dimension(85, 19));
+	  movIde.setMaximumSize(new Dimension(85, 19));
+	  movIde.setHorizontalAlignment(SwingConstants.CENTER);
+	  movIde.setBorder(new LineBorder(Color.GRAY));
+	}
+	return movIde;
+  }
+
+  public boolean gravaTela() {
+
+	// if (validaTela()) {
+	// return false;
+	// }
+
+	try {
+
+	  stp = getConexao().prepareCall(getProc().montaParametros("ES_FAZ_CONTROLE_PRODUTOS", 30, 2));
+
+	  int param = 1;
+
+	  getProc().setStp(stp);
+	  stp.registerOutParameter(param++, java.sql.Types.INTEGER);
+	  stp.registerOutParameter(param++, java.sql.Types.VARCHAR);
+
+	  if (getTabelaRes().isPegarDoGrid() == false) {
+		getProc().setInt(param++, getMovIde().getText());
+	  }
+	  else {
+		getProc().setInt(param++, getTabelaRes().getDadosExcluir("MOVIDE"));
+	  }
+	  getProc().setString(param++, getEmpCod(), stp);
+	  getProc().setShort(param++, getFilCod(), stp);
+	  getProc().setInt(param++, getProCod(), stp);
+	  getProc().setDate(param++, getConDat(), stp);
+	  getProc().setString(param++, getNumTic(), stp);
+	  getProc().setInt(param++, getCliCod(), stp);
+	  getProc().setString(param++, getCliNom(), stp);
+	  getProc().setString(param++, getMsiAfi(), stp);
+	  getProc().setString(param++, getMotNom(), stp);
+	  getProc().setString(param++, getPlaFro(), stp);
+	  getProc().setDouble(param++, getPesEnt(), stp);
+	  getProc().setDouble(param++, getPesSai(), stp);
+	  getProc().setDouble(param++, getPesLiq().getText());
+	  getProc().setDouble(param++, getQtdSac(), stp);
+	  getProc().setDouble(param++, getPerUmi(), stp);
+	  getProc().setInt(param++, getProSec(), stp);
+	  getProc().setDouble(param++, getValFre(), stp);
+	  getProc().setDouble(param++, getValArm(), stp);
+	  getProc().setDouble(param++, getValTot().getText());
+	  getProc().setDouble(param++, getPerRen(), stp);
+	  getProc().setString(param++, getIndAfla(), stp);
+	  getProc().setDouble(param++, getPerQue(), stp);
+	  getProc().setDouble(param++, getQtdPer(), stp);
+	  getProc().setDouble(param++, getTotSac().getText());
+	  getProc().setString(param++, getLocDes(), stp);
+	  getProc().setString(param++, getFoment(), stp);
+	  getProc().setString(param++, getConObs(), stp);
+	  getProc().setDouble(param++, getSecado().getText());
+	  getProc().setString(param++, getAcaoTela(getTabelaRes().getAcaoTela()));
+
+	  stp.execute();
+	  getProc().finalizarProcedure(stp, 1, 2);
+	  setMensagem(getProc().getProcedureMensagem());
+
+	  if (getProc().getProcedureProcesso() == 0) {
+		mostraMensagem(getProc().getProcedureMensagem());
+		return false;
+	  }
+
+	  if (getAcaoTela().equalsIgnoreCase("E")) {
+		limpaTela();
+		getTabelaRes().limpaTebela();
+		getProCod().requestFocus();
+	  }
+	  else {
+		limpaTela();
+		montaTela("");
+		getProCod().requestFocus();
+	  }
+
+	} catch (SQLException sqlEx) {
+	  getErro().setErro(sqlEx);
+	  return false;
+	} catch (Exception ex) {
+	  getErro().setErro(ex);
+	  return false;
+	}
+
+	return true;
   }
 }
